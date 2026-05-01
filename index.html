@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Flasha – القطاعات المخروطية</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'dark-bg': '#0f0f1a',
+        'dark-card': '#1a1a2e',
+        'dark-border': '#2a2a4a',
+        'neon-cyan': '#00f5ff',
+        'neon-purple': '#bf00ff',
+        'neon-green': '#39ff14',
+        'neon-yellow': '#ffff00',
+        'neon-orange': '#ff6b00',
+        'neon-pink': '#ff0090',
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --fl-accent-a: #00f5ff;
+    --fl-accent-b: #bf00ff;
+    --fl-accent-c: #39ff14;
+    --dark-bg: #0f0f1a;
+    --dark-card: #1a1a2e;
+    --dark-border: #2a2a4a;
+    --neon-cyan: #00f5ff;
+    --neon-purple: #bf00ff;
+    --neon-green: #39ff14;
+    --neon-yellow: #ffe600;
+    --neon-orange: #ff6b00;
+    --neon-pink: #ff0090;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--dark-bg);
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ===== FLASHCARDS ===== */
+  .flashcard-container {
+    perspective: 1200px;
+    width: 100%;
+    min-height: 340px;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(.4,2,.6,1);
+  }
+  .flashcard-inner.flipped { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    min-height: 340px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1.5px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0,245,255,0.15);
+  }
+  .flashcard-back {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 100%);
+    border: 1.5px solid var(--neon-purple);
+    box-shadow: 0 0 20px rgba(191,0,255,0.15);
+    transform: rotateY(180deg);
+  }
+  .keyword { color: var(--neon-cyan); font-weight: 800; font-size: 1.1em; text-shadow: 0 0 8px var(--neon-cyan); }
+  .keyword-green { color: var(--neon-green); font-weight: 800; }
+  .keyword-yellow { color: var(--neon-yellow); font-weight: 800; }
+  .keyword-orange { color: var(--neon-orange); font-weight: 800; }
+  .keyword-pink { color: var(--neon-pink); font-weight: 800; }
+  .keyword-purple { color: var(--neon-purple); font-weight: 800; }
+
+  /* ===== WHAT-IF ===== */
+  .whatif-card {
+    background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
+    border: 1.5px solid #2a2a4a;
+    border-radius: 1rem;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+  .whatif-answer {
+    display: none;
+    margin-top: 0.8rem;
+    padding: 0.8rem;
+    background: rgba(0,245,255,0.05);
+    border-radius: 0.6rem;
+    border-right: 3px solid var(--neon-cyan);
+    animation: fadeIn 0.4s ease;
+  }
+  .whatif-answer.show { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== VOICE STUDIO ===== */
+  .voice-question-card {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1.5px solid var(--neon-purple);
+    border-radius: 1rem;
+    padding: 1.4rem;
+  }
+  .record-btn {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--neon-pink);
+    background: rgba(255,0,144,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem auto;
+  }
+  .record-btn.recording {
+    background: rgba(255,0,144,0.3);
+    box-shadow: 0 0 25px rgba(255,0,144,0.6);
+    animation: pulse-rec 1s infinite;
+  }
+  @keyframes pulse-rec {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,0,144,0.5); }
+    50% { box-shadow: 0 0 40px rgba(255,0,144,0.9); }
+  }
+  .model-answer {
+    display: none;
+    background: rgba(57,255,20,0.05);
+    border: 1px solid var(--neon-green);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    animation: fadeIn 0.4s ease;
+  }
+  .model-answer.show { display: block; }
+
+  /* ===== CHEATSHEET / ACCORDION ===== */
+  .accordion-item { border-bottom: 1px solid #2a2a4a; }
+  .accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1rem 0.5rem;
+    text-align: right;
+    color: #e2e8f0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .accordion-header:hover { color: var(--neon-cyan); }
+  .accordion-header.open { color: var(--neon-cyan); }
+  .accordion-header .arrow { transition: transform 0.3s; font-size: 0.8rem; }
+  .accordion-header.open .arrow { transform: rotate(180deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 0.5rem;
+  }
+  .accordion-body.open { max-height: 2000px; padding-bottom: 1rem; }
+
+  /* ===== TABLE ===== */
+  .formula-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .formula-table th {
+    background: rgba(0,245,255,0.1);
+    color: var(--neon-cyan);
+    padding: 0.5rem 0.4rem;
+    text-align: center;
+    border: 1px solid #2a2a4a;
+    font-size: 0.78rem;
+  }
+  .formula-table td {
+    padding: 0.45rem 0.4rem;
+    border: 1px solid #2a2a4a;
+    text-align: center;
+    font-size: 0.78rem;
+    color: #cbd5e0;
+  }
+  .formula-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+
+  /* ===== BOTTOM NAV ===== */
+  #bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(15,15,26,0.97);
+    border-top: 1px solid #2a2a4a;
+    display: flex;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    color: #64748b;
+    font-size: 0.6rem;
+    gap: 0.2rem;
+  }
+  .nav-item .nav-icon { font-size: 1.3rem; line-height: 1; }
+  .nav-item.active { color: var(--neon-cyan); }
+  .nav-item.active .nav-icon { filter: drop-shadow(0 0 6px var(--neon-cyan)); }
+
+  /* ===== TOP HEADER ===== */
+  #top-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(15,15,26,0.97);
+    border-bottom: 1px solid #2a2a4a;
+    padding: 0.7rem 1rem;
+    z-index: 99;
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-title { font-size: 1rem; font-weight: 700; color: var(--neon-cyan); letter-spacing: 1px; }
+  .app-subtitle { font-size: 0.65rem; color: #64748b; }
+  #main-content {
+    padding-top: 70px;
+    padding-bottom: 90px;
+    min-height: 100vh;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar {
+    height: 4px;
+    background: #2a2a4a;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  /* ===== BTN ===== */
+  .btn-neon {
+    background: transparent;
+    border: 1.5px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    border-radius: 0.6rem;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-neon:hover, .btn-neon:active {
+    background: rgba(0,245,255,0.1);
+    box-shadow: 0 0 12px rgba(0,245,255,0.3);
+  }
+  .btn-neon-purple {
+    border-color: var(--neon-purple);
+    color: var(--neon-purple);
+  }
+  .btn-neon-purple:hover { background: rgba(191,0,255,0.1); }
+  .btn-neon-green {
+    border-color: var(--neon-green);
+    color: var(--neon-green);
+  }
+  .btn-neon-green:hover { background: rgba(57,255,20,0.1); }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    padding: 1rem 1rem 0.5rem;
+  }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0;
+  }
+  .section-desc {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin: 0.2rem 0 0;
+  }
+
+  /* Card counter */
+  .card-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,245,255,0.08);
+    border: 1px solid rgba(0,245,255,0.2);
+    border-radius: 20px;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.75rem;
+    color: var(--neon-cyan);
+  }
+
+  /* Type badge */
+  .type-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .badge-parabola { background: rgba(0,245,255,0.15); color: var(--neon-cyan); border: 1px solid rgba(0,245,255,0.3); }
+  .badge-ellipse { background: rgba(57,255,20,0.15); color: var(--neon-green); border: 1px solid rgba(57,255,20,0.3); }
+  .badge-hyperbola { background: rgba(255,0,144,0.15); color: var(--neon-pink); border: 1px solid rgba(255,0,144,0.3); }
+  .badge-axes { background: rgba(191,0,255,0.15); color: var(--neon-purple); border: 1px solid rgba(191,0,255,0.3); }
+  .badge-general { background: rgba(255,107,0,0.15); color: var(--neon-orange); border: 1px solid rgba(255,107,0,0.3); }
+
+  /* Tap hint */
+  .tap-hint {
+    font-size: 0.65rem;
+    color: #475569;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  /* Formula display */
+  .formula {
+    font-family: 'Courier New', monospace;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #334155;
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    color: #f0f4f8;
+    display: inline-block;
+    margin: 0.2rem 0;
+    direction: ltr;
+  }
+
+  /* Pulse dot */
+  @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .pulse-dot { animation: pulse-dot 1.5s infinite; }
+
+  /* Section bg decoration */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  #main-content { position: relative; z-index: 1; }
+
+  /* Voice waveform */
+  .waveform { display: flex; align-items: center; gap: 3px; height: 30px; justify-content: center; }
+  .wave-bar {
+    width: 4px; background: var(--neon-pink);
+    border-radius: 2px;
+    transition: height 0.1s;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- Flasha Loader -->
+<div id="fl-intro" role="status" aria-label="Flasha — Loading" aria-live="polite">
+  <div class="fl-intro-grid" aria-hidden="true"></div>
+  <div class="fl-intro-orb fl-intro-orb--a" aria-hidden="true"></div>
+  <div class="fl-intro-orb fl-intro-orb--b" aria-hidden="true"></div>
+  <div class="fl-intro-orb fl-intro-orb--c" aria-hidden="true"></div>
+  <div class="fl-intro-noise" aria-hidden="true"></div>
+  <div class="fl-intro-stage" aria-hidden="true">
+    <div class="fl-intro-ring-wrap">
+      <svg class="fl-intro-ring-svg" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="fl-grad-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--fl-accent-a)"/>
+            <stop offset="50%" stop-color="var(--fl-accent-b)"/>
+            <stop offset="100%" stop-color="var(--fl-accent-c)"/>
+          </linearGradient>
+        </defs>
+        <circle class="fl-ring-track" cx="70" cy="70" r="62" stroke-width="1"/>
+        <circle class="fl-ring-arc" cx="70" cy="70" r="62" stroke-width="1.5" stroke-linecap="round" stroke="url(#fl-grad-ring)"/>
+      </svg>
+      <div class="fl-intro-emblem"><span class="fl-intro-emoji">🎴</span></div>
+    </div>
+    <div class="fl-intro-wordmark">FLASHA</div>
+    <p class="fl-intro-byline">القطاعات المخروطية · مرجع الشفوي</p>
+    <div class="fl-intro-bar"><span class="fl-intro-bar-fill"></span></div>
+  </div>
+</div>
+
+<!-- FAB Widget -->
+<div id="fl-fab-root">
+  <div id="fl-fab-menu" role="menu" aria-hidden="true">
+    <div class="fl-panel-head">
+      <span class="fl-panel-emoji">🎴</span>
+      <span class="fl-panel-name">Flasha Connect</span>
+    </div>
+    <ul class="fl-link-list">
+      <li id="pwa-install-item" style="display:none;">
+        <a href="#" id="fl-install-btn" class="fl-link fl-link--install" data-sound="pop">
+          <span class="fl-link-chip">📲</span>
+          <span class="fl-link-body"><span class="fl-link-name">Install App</span><span class="fl-link-handle">Work Offline</span></span>
+        </a>
+      </li>
+      <li><a href="https://youtube.com/@flasha_0?si=Am46gTJ9Hk3lyHEV" target="_blank" class="fl-link fl-link--yt"><span>▶️</span> YouTube</a></li>
+      <li><a href="https://www.instagram.com/flasha_0/" target="_blank" class="fl-link fl-link--ig"><span>📸</span> Instagram</a></li>
+      <li><a href="https://github.com/Flasha-0" target="_blank" class="fl-link fl-link--gh"><span>💻</span> GitHub</a></li>
+      <li><a href="https://discord.com/users/1484153478421942335" target="_blank" class="fl-link fl-link--dc"><span>💬</span> Discord</a></li>
+      <li><a href="https://api.whatsapp.com/send/?phone=201019953525&text&type=phone_number&app_absent=0" target="_blank" class="fl-link fl-link--wa"><span>🟢</span> WhatsApp</a></li>
+      <li><a href="https://t.me/Flasha_0" target="_blank" class="fl-link fl-link--tg"><span>✈️</span> Telegram</a></li>
+    </ul>
+  </div>
+  <button id="fl-fab-btn">🎴</button>
+</div>
+
+<!-- Background Grid -->
+<div class="bg-grid"></div>
+
+<!-- TOP HEADER -->
+<div id="top-header">
+  <div>
+    <div class="app-title">🎴 القطاعات المخروطية</div>
+    <div class="app-subtitle">مرجع الشفوي النهائي · Flasha</div>
+  </div>
+  <div id="header-badge" class="card-counter">
+    <span class="pulse-dot" style="color:var(--neon-green)">●</span>
+    <span id="header-info">البطاقات</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
+
+  <!-- ===== SECTION 1: FLASHCARDS ===== -->
+  <div id="sec-flashcards" class="section active">
+    <div class="section-header">
+      <h1 class="section-title">🃏 بطاقات الشفوي الذكية</h1>
+      <p class="section-desc">اضغط على البطاقة للكشف عن الإجابة النموذجية</p>
+    </div>
+
+    <div style="padding: 0 1rem;">
+      <!-- Progress -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+        <span id="card-counter-text" style="font-size:0.75rem; color:#64748b;">البطاقة 1 من 25</span>
+        <span id="card-type-badge" class="type-badge badge-general">عام</span>
+      </div>
+      <div class="progress-bar" style="margin-bottom:1rem;">
+        <div class="progress-fill" id="cards-progress" style="width:4%"></div>
+      </div>
+
+      <!-- Flashcard -->
+      <div class="flashcard-container" id="flashcard-wrap">
+        <div class="flashcard-inner" id="flashcard-inner">
+          <div class="flashcard-front" id="fc-front">
+            <div style="font-size:2rem;margin-bottom:0.8rem;">❓</div>
+            <div id="fc-question" style="font-size:1.05rem; font-weight:600; line-height:1.6; color:#f1f5f9;"></div>
+            <div class="tap-hint">👆 اضغط للكشف</div>
+          </div>
+          <div class="flashcard-back" id="fc-back">
+            <div style="font-size:1.8rem;margin-bottom:0.6rem;">✅</div>
+            <div id="fc-answer" style="font-size:0.92rem; line-height:1.7; color:#cbd5e0;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div style="display:flex; gap:0.8rem; margin-top:1rem; justify-content:center; align-items:center;">
+        <button class="btn-neon btn-neon-purple" onclick="prevCard()" id="btn-prev">⬅ السابق</button>
+        <button class="btn-neon" onclick="flipCard()" style="font-size:1rem; padding:0.5rem 1rem;">🔄</button>
+        <button class="btn-neon" onclick="nextCard()" id="btn-next">التالي ➡</button>
+      </div>
+
+      <!-- Category Filter -->
+      <div style="margin-top:1.2rem; display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+        <button class="btn-neon" style="font-size:0.7rem;padding:0.3rem 0.7rem;" onclick="filterCards('all')">الكل</button>
+        <button class="btn-neon" style="font-size:0.7rem;padding:0.3rem 0.7rem;border-color:#00f5ff;color:#00f5ff;" onclick="filterCards('parabola')">مكافئ</button>
+        <button class="btn-neon" style="font-size:0.7rem;padding:0.3rem 0.7rem;border-color:#39ff14;color:#39ff14;" onclick="filterCards('ellipse')">ناقص</button>
+        <button class="btn-neon" style="font-size:0.7rem;padding:0.3rem 0.7rem;border-color:#ff0090;color:#ff0090;" onclick="filterCards('hyperbola')">زائد</button>
+        <button class="btn-neon" style="font-size:0.7rem;padding:0.3rem 0.7rem;border-color:#bf00ff;color:#bf00ff;" onclick="filterCards('axes')">المحاور</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: WHAT-IF ===== -->
+  <div id="sec-whatif" class="section">
+    <div class="section-header">
+      <h1 class="section-title">🌪️ سيناريوهات "ماذا لو؟"</h1>
+      <p class="section-desc">أسئلة خبيثة واستثنائية · اضغط للكشف عن الإجابة</p>
+    </div>
+    <div style="padding: 0 1rem;" id="whatif-list"></div>
+  </div>
+
+  <!-- ===== SECTION 3: VOICE STUDIO ===== -->
+  <div id="sec-voice" class="section">
+    <div class="section-header">
+      <h1 class="section-title">🎙️ ستوديو الإلقاء</h1>
+      <p class="section-desc">سجّل إجابتك ثم قارنها بالنموذج</p>
+    </div>
+    <div style="padding: 0 1rem;">
+
+      <!-- Question Selector -->
+      <div style="margin-bottom:1rem;">
+        <select id="voice-q-select" onchange="loadVoiceQuestion()" style="width:100%;background:#1a1a2e;border:1px solid #2a2a4a;color:#e2e8f0;padding:0.6rem;border-radius:0.6rem;font-family:inherit;font-size:0.85rem;">
+        </select>
+      </div>
+
+      <!-- Voice Question Card -->
+      <div class="voice-question-card">
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.8rem;">
+          <span style="color:var(--neon-purple);font-size:1.2rem;">📝</span>
+          <span style="font-size:0.75rem;color:var(--neon-purple);font-weight:700;">السؤال الشفوي</span>
+        </div>
+        <div id="voice-question-text" style="font-size:1rem;line-height:1.7;color:#f1f5f9;font-weight:600;"></div>
+      </div>
+
+      <!-- Record Controls -->
+      <div style="text-align:center; margin:1rem 0;">
+        <div class="record-btn" id="record-btn" onclick="toggleRecording()">
+          <span id="record-icon">🎙️</span>
+        </div>
+        <div id="record-status" style="font-size:0.8rem;color:#64748b;">اضغط للتسجيل</div>
+        <div class="waveform" id="waveform" style="display:none;">
+          <div class="wave-bar" style="height:8px"></div>
+          <div class="wave-bar" style="height:20px"></div>
+          <div class="wave-bar" style="height:14px"></div>
+          <div class="wave-bar" style="height:26px"></div>
+          <div class="wave-bar" style="height:10px"></div>
+          <div class="wave-bar" style="height:22px"></div>
+          <div class="wave-bar" style="height:16px"></div>
+          <div class="wave-bar" style="height:12px"></div>
+        </div>
+      </div>
+
+      <!-- Audio Player (after recording) -->
+      <div id="audio-player-wrap" style="display:none;margin:0.8rem 0;">
+        <div style="font-size:0.75rem;color:#64748b;margin-bottom:0.4rem;">تسجيلك:</div>
+        <audio id="audio-playback" controls style="width:100%;border-radius:0.5rem;"></audio>
+      </div>
+
+      <!-- Show Model Answer Button -->
+      <button class="btn-neon btn-neon-green" style="width:100%;margin-top:0.5rem;" onclick="toggleModelAnswer()">
+        📖 إظهار الإجابة النموذجية
+      </button>
+
+      <!-- Model Answer -->
+      <div class="model-answer" id="model-answer-wrap">
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.8rem;">
+          <span style="color:var(--neon-green);font-size:1rem;">✅</span>
+          <span style="font-size:0.75rem;color:var(--neon-green);font-weight:700;">الإجابة النموذجية</span>
+        </div>
+        <div id="model-answer-text" style="font-size:0.88rem;line-height:1.8;color:#cbd5e0;"></div>
+      </div>
+
+      <!-- Navigation -->
+      <div style="display:flex;gap:0.8rem;margin-top:1rem;justify-content:center;">
+        <button class="btn-neon btn-neon-purple" onclick="prevVoiceQ()">⬅ السابق</button>
+        <button class="btn-neon" onclick="nextVoiceQ()">التالي ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: CHEATSHEET ===== -->
+  <div id="sec-cheat" class="section">
+    <div class="section-header">
+      <h1 class="section-title">📋 المرجع السريع</h1>
+      <p class="section-desc">جداول مقارنة · معادلات قياسية · قواعد تغيير المحاور</p>
+    </div>
+    <div style="padding: 0 1rem;">
+
+      <!-- Eccentricity Summary Card -->
+      <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #2a2a4a;border-radius:1rem;padding:1rem;margin-bottom:1rem;">
+        <div style="font-size:0.85rem;font-weight:700;color:#f1f5f9;margin-bottom:0.7rem;display:flex;align-items:center;gap:0.5rem;">
+          <span>⚡</span> قاعدة الاختلاف المركزي
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;text-align:center;">
+          <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);border-radius:0.6rem;padding:0.5rem;">
+            <div style="font-size:1.1rem;color:var(--neon-cyan);font-weight:900;">e = 1</div>
+            <div style="font-size:0.65rem;color:#94a3b8;margin-top:0.2rem;">مكافئ</div>
+          </div>
+          <div style="background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:0.6rem;padding:0.5rem;">
+            <div style="font-size:1.1rem;color:var(--neon-green);font-weight:900;">e &lt; 1</div>
+            <div style="font-size:0.65rem;color:#94a3b8;margin-top:0.2rem;">ناقص</div>
+          </div>
+          <div style="background:rgba(255,0,144,0.08);border:1px solid rgba(255,0,144,0.2);border-radius:0.6rem;padding:0.5rem;">
+            <div style="font-size:1.1rem;color:var(--neon-pink);font-weight:900;">e &gt; 1</div>
+            <div style="font-size:0.65rem;color:#94a3b8;margin-top:0.2rem;">زائد</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion Container -->
+      <div id="accordion-container" style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:1rem;overflow:hidden;">
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end main-content -->
+
+<!-- BOTTOM NAV -->
+<nav id="bottom-nav">
+  <button class="nav-item active" onclick="switchSection('flashcards',this)" data-sec="flashcards">
+    <span class="nav-icon">🃏</span>
+    <span>البطاقات</span>
+  </button>
+  <button class="nav-item" onclick="switchSection('whatif',this)" data-sec="whatif">
+    <span class="nav-icon">🌪️</span>
+    <span>ماذا لو؟</span>
+  </button>
+  <button class="nav-item" onclick="switchSection('voice',this)" data-sec="voice">
+    <span class="nav-icon">🎙️</span>
+    <span>الإلقاء</span>
+  </button>
+  <button class="nav-item" onclick="switchSection('cheat',this)" data-sec="cheat">
+    <span class="nav-icon">📋</span>
+    <span>المرجع</span>
+  </button>
+</nav>
+
+<footer id="fl-footer">
+  <p>Crafted by <a href="https://github.com/Flasha-0" target="_blank">Flasha 🎴</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-scripts.js"></script>
+
+<script>
+// ============================================================
+// DATA: 25 FLASHCARDS
+// ============================================================
+const ALL_CARDS = [
+  {
+    id:1, cat:'general',
+    q:'ما هو تعريف القطع المخروطي بشكل عام وما هو الاختلاف المركزي e؟',
+    a:'القطع المخروطي هو <span class="keyword">المحل الهندسي</span> للنقطة التي تتحرك بحيث تكون العلاقة بين بُعدها عن نقطة ثابتة (البؤرة) وبُعدها عن مستقيم ثابت (الدليل) <span class="keyword-yellow">نسبة ثابتة تُسمى الاختلاف المركزي e</span>. إذا كان <span class="keyword">e = 1</span> فمكافئ، إذا كان <span class="keyword-green">e &lt; 1</span> فناقص، إذا كان <span class="keyword-pink">e &gt; 1</span> فزائد.'
+  },
+  {
+    id:2, cat:'parabola',
+    q:'ما هو التعريف الهندسي للقطع المكافئ وما هي معادلته القياسية؟',
+    a:'القطع المكافئ هو المحل الهندسي للنقاط الواقعة في المستوى والتي تبعد عن <span class="keyword">البؤرة (p,0)</span> بمسافة مساوية لبُعدها عن <span class="keyword-yellow">الدليل x = -p</span>. معادلته القياسية: <span class="keyword">y² = 4px</span>. رأسه الأصل، محوره محور x، وطول وتره البؤري العمودي <span class="keyword-green">4p</span>.'
+  },
+  {
+    id:3, cat:'parabola',
+    q:'كيف يختلف اتجاه القطع المكافئ بحسب إشارة p وبحسب المحور؟',
+    a:'إذا كانت <span class="keyword">y² = 4px</span>: المحور أفقي، p &gt; 0 ينفتح يمينًا، p &lt; 0 ينفتح يسارًا.<br>إذا كانت <span class="keyword-green">x² = 4py</span>: المحور رأسي، p &gt; 0 ينفتح أعلى، p &lt; 0 ينفتح أسفل.<br>الفرق الجوهري: <span class="keyword-yellow">تبادل موضع x² و y²</span> يعني تبادل اتجاه المحور.'
+  },
+  {
+    id:4, cat:'parabola',
+    q:'ما هو شرط تماس المستقيم y = mx + c مع القطع المكافئ y² = 4ax؟',
+    a:'شرط التماس هو أن يكون جذرا معادلة التقاطع متساويين. بعد التعويض والتبسيط نجد الشرط: <span class="keyword">c = a/m</span>. أي أن المستقيم y = mx + a/m يمس القطع المكافئ دائمًا مهما كانت قيمة m. نقطة التماس هي <span class="keyword-green">(a/m², 2a/m)</span>.'
+  },
+  {
+    id:5, cat:'parabola',
+    q:'ما هي معادلة المماس للقطع المكافئ y² = 4ax عند النقطة (x₁, y₁)؟',
+    a:'معادلة المماس للقطع المكافئ y² = 4ax عند النقطة (x₁, y₁) هي: <span class="keyword">yy₁ = 2a(x + x₁)</span>. هذه المعادلة تُستخرج بتفاضل المعادلة ثم تطبيق معادلة المماس بميل 2a/y₁.'
+  },
+  {
+    id:6, cat:'parabola',
+    q:'ما هي المعادلات البارامترية للقطع المكافئ y² = 4ax؟',
+    a:'المعادلات البارامترية للقطع المكافئ هي: <span class="keyword">x = at²</span> و <span class="keyword-green">y = 2at</span>. بحذف البارامتر t بين المعادلتين نحصل على y² = 4ax. أي نقطة على القطع يمكن تمثيلها بـ <span class="keyword-yellow">(at², 2at)</span>.'
+  },
+  {
+    id:7, cat:'ellipse',
+    q:'ما هو التعريف الهندسي للقطع الناقص وما هي علاقة b² = a²(1-e²)؟',
+    a:'القطع الناقص هو المحل الهندسي لنقطة تتحرك بحيث <span class="keyword">مجموع بُعدَيها عن البؤرتين ثابت = 2a</span>. أي PF₁ + PF₂ = 2a. العلاقة: <span class="keyword-green">b² = a²(1 - e²)</span> حيث e &lt; 1، وهذا يعني b &lt; a. البؤرتان على المحور الأكبر عند (±ae, 0).'
+  },
+  {
+    id:8, cat:'ellipse',
+    q:'ما هي المعادلة القياسية للقطع الناقص وأين تقع بؤرتاه ودليلاه؟',
+    a:'المعادلة القياسية: <span class="keyword">x²/a² + y²/b² = 1</span> حيث a &gt; b. البؤرتان: <span class="keyword-green">(±ae, 0)</span>. الدليلان: <span class="keyword-yellow">x = ±a/e</span>. مركزه الأصل. محوره الأكبر يوازي x بطول 2a، ومحوره الأصغر يوازي y بطول 2b.'
+  },
+  {
+    id:9, cat:'ellipse',
+    q:'كيف تعرف الوتر البؤري العمودي للقطع الناقص وما طوله؟',
+    a:'الوتر البؤري العمودي هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. يقطع القطع الناقص في نقطتين بؤريتين. طول نصف الوتر البؤري العمودي: <span class="keyword">L = b²/a</span>. إذن <span class="keyword-green">طول الوتر الكامل = 2b²/a</span>. يُستخرج بتعويض x = ae في معادلة القطع.'
+  },
+  {
+    id:10, cat:'ellipse',
+    q:'ما هو شرط تماس المستقيم y = mx + c مع القطع الناقص x²/a² + y²/b² = 1؟',
+    a:'بتعويض معادلة المستقيم في معادلة القطع وتساوي المميز بالصفر نجد الشرط: <span class="keyword">c² = a²m² + b²</span>. أي المستقيم y = mx ± √(a²m² + b²) يمس القطع الناقص لأي ميل m. العلاقة تُظهر أن المماس يتوقف على a وb وm فقط.'
+  },
+  {
+    id:11, cat:'ellipse',
+    q:'ما هي معادلة المماس للقطع الناقص عند النقطة (x₁, y₁)؟',
+    a:'معادلة المماس للقطع الناقص x²/a² + y²/b² = 1 عند النقطة (x₁, y₁) هي: <span class="keyword">xx₁/a² + yy₁/b² = 1</span>. يُلاحظ أن هذه المعادلة تُشبه معادلة القطع بتبديل x² بـ xx₁ وy² بـ yy₁ وهذه <span class="keyword-green">الحيلة المركزية</span> تنطبق على الناقص والزائد.'
+  },
+  {
+    id:12, cat:'hyperbola',
+    q:'ما هو التعريف الهندسي للقطع الزائد وكيف يختلف عن القطع الناقص؟',
+    a:'القطع الزائد هو المحل الهندسي لنقطة تتحرك بحيث <span class="keyword">فرق بُعدَيها عن البؤرتين ثابت = 2a</span>. أي |PF₁ - PF₂| = 2a. الفرق عن الناقص: الناقص يستخدم <span class="keyword-green">المجموع</span> (2a)، أما الزائد فيستخدم <span class="keyword-pink">الفرق</span> (2a). للزائد e &gt; 1، وللناقص e &lt; 1.'
+  },
+  {
+    id:13, cat:'hyperbola',
+    q:'ما هي المعادلة القياسية للقطع الزائد وما هي الخطوط التقاربية؟',
+    a:'المعادلة القياسية: <span class="keyword">x²/a² - y²/b² = 1</span>. العلاقة: <span class="keyword-green">b² = a²(e² - 1)</span> حيث e &gt; 1. الخطوط التقاربية: <span class="keyword-yellow">y = ±(b/a)x</span>. إذا كان المحور الأكبر هو Y (رأسي): y²/a² - x²/b² = 1 والخطوط التقاربية: y = ±(a/b)x.'
+  },
+  {
+    id:14, cat:'hyperbola',
+    q:'ما هو القطع الزائد القائم وما خواصه المميزة؟',
+    a:'القطع الزائد القائم هو الذي <span class="keyword">خطاه التقاربيان متعامدان</span>. شرط التعامد: ميل₁ × ميل₂ = -1 أي (b/a)×(-b/a) = -1 فينتج <span class="keyword-green">a = b</span>. معادلته: <span class="keyword">x² - y² = a²</span>. اختلافه المركزي دائمًا <span class="keyword-yellow">e = √2</span> لأن b² = a²(e²-1) يصبح a² = a²(e²-1) فينتج e² = 2.'
+  },
+  {
+    id:15, cat:'hyperbola',
+    q:'ما هي الخطوط التقاربية للقطع الزائد وكيف تختلف عن معادلة القطع نفسه؟',
+    a:'خطوط التقارب تتقاطع عند المركز وتقترب من القطع إلى ما لا نهاية. المعادلة المشتركة للخطين: <span class="keyword">x²/a² - y²/b² = 0</span>. أما معادلة القطع الزائد نفسه: <span class="keyword-green">x²/a² - y²/b² = 1</span>. الفرق الوحيد في <span class="keyword-yellow">الحد الثابت</span> (0 للتقاربيين، 1 للقطع).'
+  },
+  {
+    id:16, cat:'hyperbola',
+    q:'ما هو الوتر البؤري العمودي للقطع الزائد وما طوله؟',
+    a:'الوتر البؤري العمودي للقطع الزائد هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. طول نصفه: <span class="keyword">L = b²/a</span>، وطوله الكامل: <span class="keyword-green">2L = 2b²/a</span>. يُستخرج بتعويض x = ae في معادلة القطع. هذه القيمة <span class="keyword-yellow">نفس</span> قيمة الوتر البؤري للقطع الناقص.'
+  },
+  {
+    id:17, cat:'hyperbola',
+    q:'ما هو القطع الزائد المرافق وما علاقته بالقطع الأصلي؟',
+    a:'القطع الزائد المرافق لـ x²/a² - y²/b² = 1 هو: <span class="keyword">y²/b² - x²/a² = 1</span> (أو بصيغة أخرى x²/a² - y²/b² = -1). المميز: <span class="keyword-green">محور القطع الأصلي يصبح المحور المرافق</span> للمرافق والعكس. كلا القطعين يشتركان في <span class="keyword-yellow">نفس الخطوط التقاربية y = ±(b/a)x</span>.'
+  },
+  {
+    id:18, cat:'axes',
+    q:'ما هي قواعد نقل المحاور في المستوى وكيف تُطبَّق على المعادلات؟',
+    a:'عند نقل أصل الإحداثيات إلى النقطة (α, β) تكون العلاقة: <span class="keyword">x = x\' + α</span> و <span class="keyword-green">y = y\' + β</span>. للحصول على الإحداثيات الجديدة: x\' = x - α، y\' = y - β. الهدف: <span class="keyword-yellow">حذف حدود الدرجة الأولى</span> من المعادلة العامة بتحريك المركز إلى نقطة مناسبة.'
+  },
+  {
+    id:19, cat:'axes',
+    q:'ما هي قواعد دوران المحاور وما معادلات التحويل؟',
+    a:'عند دوران المحاور بزاوية θ تكون العلاقات: <span class="keyword">x = x\'cosθ - y\'sinθ</span> و <span class="keyword-green">y = x\'sinθ + y\'cosθ</span>. للحصول على الإحداثيات الجديدة: x\' = xcosθ + ysinθ، y\' = -xsinθ + ycosθ. الهدف: <span class="keyword-yellow">حذف الحد xy</span> من المعادلة العامة.'
+  },
+  {
+    id:20, cat:'axes',
+    q:'كيف تجد زاوية الدوران اللازمة لحذف الحد xy من المعادلة العامة؟',
+    a:'المعادلة العامة: ax² + 2mxy + by² + ... = 0. لحذف الحد xy يجب أن يدور المحوران بزاوية θ تعطى بالعلاقة: <span class="keyword">tan(2θ) = 2m/(a - b)</span>. فإذا كان a = b استخدمنا θ = 45°. ونستنتج: <span class="keyword-green">θ = ½ tan⁻¹[2m/(a-b)]</span>.'
+  },
+  {
+    id:21, cat:'axes',
+    q:'كيف تحذف حدود الدرجة الأولى من المعادلة العامة بنقل المحاور؟',
+    a:'لحذف حدي x و y من: ax² + 2mxy + by² + 2nx + 2Ly + C = 0، ننقل إلى نقطة (x₀, y₀) تحقق المعادلتين: <span class="keyword">ax₀ + my₀ + n = 0</span> و <span class="keyword-green">mx₀ + by₀ + L = 0</span>. أي نوجد نقطة تجعل معاملات x و y تساوي صفرًا في المعادلة الجديدة. <span class="keyword-yellow">حدود الدرجة الثانية تبقى كما هي</span>.'
+  },
+  {
+    id:22, cat:'general',
+    q:'ما هي المعادلة العامة للدرجة الثانية وكيف تميز نوع القطع المخروطي منها؟',
+    a:'المعادلة العامة: <span class="keyword">Ax² + Bxy + Cy² + Dx + Ey + F = 0</span>. التمييز بالمميز B² - 4AC:<br>• <span class="keyword-yellow">B² - 4AC = 0</span>: قطع مكافئ<br>• <span class="keyword-green">B² - 4AC &lt; 0</span>: قطع ناقص (أو دائرة إذا A=C و B=0)<br>• <span class="keyword-pink">B² - 4AC &gt; 0</span>: قطع زائد'
+  },
+  {
+    id:23, cat:'ellipse',
+    q:'ما هي خاصية المماس للقطع الناقص المتعلقة بزاوية انعكاس الضوء؟',
+    a:'الخاصية المماسية للقطع الناقص: <span class="keyword">المماس عند أي نقطة يصنع زاوية متساوية</span> مع الخطين الواصلين للنقطة بالبؤرتين F₁ و F₂. أي يكون عمودي على منصف الزاوية بين هذين الخطين. التطبيق: <span class="keyword-green">طاولة البلياردو على شكل ناقص</span> - الكرة من F₁ ترتد إلى F₂ مهما كان اتجاهها.'
+  },
+  {
+    id:24, cat:'hyperbola',
+    q:'ما هو الاختلاف المركزي للقطع الزائد وعلاقته بزاوية الخطين التقاربيين؟',
+    a:'إذا كانت الزاوية بين الخطين التقاربيين هي 2θ، فإن: tan θ = b/a. ثم: <span class="keyword">sec θ = √(a² + b²)/a = c/a = e</span>. إذن الاختلاف المركزي يساوي قاطع زاوية نصف زاوية الخطين التقاربيين. <span class="keyword-green">e = sec θ</span> حيث θ هي نصف الزاوية بين التقاربيين.'
+  },
+  {
+    id:25, cat:'general',
+    q:'قارن بين القطوع الثلاثة (مكافئ، ناقص، زائد) في: المعادلة، البؤر، الدليل، الاختلاف المركزي.',
+    a:'<b style="color:var(--neon-cyan)">مكافئ:</b> y²=4px، بؤرة (p,0)، دليل x=-p، <span class="keyword">e=1</span><br><b style="color:var(--neon-green)">ناقص:</b> x²/a²+y²/b²=1، بؤرتان (±ae,0)، دليلان x=±a/e، <span class="keyword-green">e&lt;1</span><br><b style="color:var(--neon-pink)">زائد:</b> x²/a²-y²/b²=1، بؤرتان (±ae,0)، دليلان x=±a/e، <span class="keyword-pink">e&gt;1</span><br>ثابت مشترك: طول الوتر البؤري العمودي = <span class="keyword-yellow">2b²/a</span> (للناقص والزائد).'
+  }
+];
+
+// ============================================================
+// DATA: WHAT-IF SCENARIOS
+// ============================================================
+const WHATIF = [
+  {
+    icon: '🔺',
+    q: 'ماذا يحدث إذا كان المستوى القاطع يمر برأس المخروط بالضبط؟',
+    a: '🎭 <span class="keyword">الدراما!</span> عندما يمر المستوى برأس المخروط، <strong>لا يوجد قطع حقيقي</strong>! بل تظهر:<br>• نقطة واحدة (إذا كان المستوى يلمس الرأس فقط)<br>• <span class="keyword-green">مستقيمان متقاطعان</span> (إذا كان المستوى يحتوي على خطين توليديين من الرأس)<br>وهذه تُسمى <span class="keyword-yellow">القطوع المنحلة (Degenerate Conics)</span> ويمكن اعتبارها قطعًا مكافئًا بـ "حافته" أو قطعًا زائدًا أُزيل كل محتواه!'
+  },
+  {
+    icon: '🤯',
+    q: 'مفارقة الأسماء: لماذا القطع "الناقص" يستخدم إشارة الجمع (+) ولماذا القطع "الزائد" يستخدم إشارة الطرح (-)؟',
+    a: '⚡ <span class="keyword-yellow">التناقض الرياضي الجميل!</span><br>القطع <span class="keyword-green">الناقص</span>: معادلته x²/a² <span class="keyword-green">+</span> y²/b² = 1 (إشارة جمع!) لأنه "ناقص الانفتاح" أي منغلق على نفسه.<br>القطع <span class="keyword-pink">الزائد</span>: معادلته x²/a² <span class="keyword-pink">-</span> y²/b² = 1 (إشارة طرح!) لأنه "يزيد" وينفتح إلى ما لا نهاية.<br><span class="keyword">القاعدة الذهبية:</span> الإشارة الأقل (السالب) → القطع الأكثر انفتاحًا (الزائد)!'
+  },
+  {
+    icon: '🌀',
+    q: 'ماذا يحدث إذا أدرنا المحاور بزاوية 45° في معادلة القطع الزائد xy = k؟',
+    a: '🌀 <span class="keyword">السحر الرياضي!</span> المعادلة xy = k تبدو غريبة، لكن بدوران المحاور 45°:<br>x = (x\'-y\')/√2، y = (x\'+y\')/√2<br>فتصبح: <span class="keyword">(x\')² - (y\')² = 2k</span><br>وهذه <span class="keyword-green">معادلة قطع زائد قائم</span> بمحاور موازية للأصل! أي أن xy = k هو قطع زائد دُوِّرت محاوره 45°، وخطوطه التقاربية هي محورا الإحداثيات نفسهما.'
+  },
+  {
+    icon: '💫',
+    q: 'هل يمكن أن يكون اختلاف مركزي القطع الزائد القائم هو دائمًا √2؟ لماذا؟',
+    a: '✅ <span class="keyword-green">نعم دائمًا!</span> للقطع الزائد القائم: a = b (شرط التعامد). إذن:<br>b² = a²(e² - 1) ← a² = a²(e² - 1) ← e² - 1 = 1 ← <span class="keyword">e² = 2 ← e = √2</span><br>هذا مستقل عن قيمة a تمامًا! فالقطع الزائد القائم <span class="keyword-yellow">دائمًا وأبدًا</span> اختلافه المركزي √2 مهما كانت أبعاده.'
+  },
+  {
+    icon: '🎯',
+    q: 'ماذا يحدث للقطع الناقص إذا جعلنا a = b؟ هل لا يزال ناقصًا؟',
+    a: '🎯 <span class="keyword-cyan">المفاجأة!</span> إذا كان a = b في x²/a² + y²/b² = 1:<br>تصبح x²/a² + y²/a² = 1 أي <span class="keyword">x² + y² = a²</span><br>وهذه <span class="keyword-green">معادلة دائرة!</span> الدائرة هي حالة خاصة من القطع الناقص عندما يتساوى المحوران الأكبر والأصغر. وعندها:<br>• البؤرتان تتحدان في مركز الدائرة<br>• <span class="keyword-yellow">الاختلاف المركزي e = 0</span> (صفر!'
+  },
+  {
+    icon: '⚡',
+    q: 'ما الذي يميز نقل المحاور عن دوران المحاور كأداتين لتبسيط المعادلة؟',
+    a: '⚡ <span class="keyword">الفرق الاستراتيجي:</span><br>🔄 <span class="keyword-green">نقل المحاور</span>: نغير موضع الأصل دون تغيير اتجاه المحاور → يحذف <span class="keyword-yellow">حدود الدرجة الأولى</span> (x, y) → يُستخدم عندما تكون المعادلة Ax² + By² + Cx + Dy + E = 0<br>🌀 <span class="keyword-pink">دوران المحاور</span>: ندير المحاور بزاوية θ دون تغيير موضع الأصل → يحذف <span class="keyword">الحد xy</span> → يُستخدم عندما تكون المعادلة Ax² + Bxy + Cy² + ... = 0'
+  },
+  {
+    icon: '🔥',
+    q: 'إذا كان القطع الزائد وقطعه المرافق يشتركان في نفس الخطوط التقاربية، كيف تميز بينهما بصريًا؟',
+    a: '🔥 <span class="keyword-yellow">الحيلة البصرية!</span><br>القطع الزائد x²/a² - y²/b² = 1: فرعاه <span class="keyword">أفقيان</span> (يمتدان يمينًا ويسارًا)، ويقطع محور x.<br>المرافق y²/b² - x²/a² = 1: فرعاه <span class="keyword-green">رأسيان</span> (يمتدان لأعلى ولأسفل)، ويقطع محور y.<br>التذكر: <span class="keyword-pink">الكمية الموجبة هي الكمية التي تحدد المحور الذي يقطعه القطع!</span>'
+  },
+  {
+    icon: '🧲',
+    q: 'ماذا لو أن نقطة تتحرك بحيث بُعدها عن نقطة ثابتة يساوي بعدها عن نقطة ثابتة أخرى؟ ما القطع الناتج؟',
+    a: '🧲 <span class="keyword">المنصف العمودي!</span> لو كانت النقطتان الثابتتان هما (a, 0) و (-a, 0)، فالمحل الهندسي هو مجموعة النقاط المتساوية البُعد منهما، وهذا هو <span class="keyword-green">منصف المسافة بينهما</span> أي محور y، وهو مستقيم. هذا يوضح: القطع المخروطي يتطلب <span class="keyword-yellow">نقطة واحدة (بؤرة) ومستقيم (دليل)</span> وليس نقطتين فقط!'
+  }
+];
+
+// ============================================================
+// DATA: VOICE QUESTIONS
+// ============================================================
+const VOICE_QUESTIONS = [
+  {
+    q: 'عرّف القطع المكافئ تعريفًا هندسيًا كاملًا، ثم اذكر معادلته القياسية وأهم عناصره.',
+    a: 'القطع المكافئ هو المحل الهندسي للنقاط الواقعة في المستوى والتي تبعد عن نقطة ثابتة تُسمى البؤرة بمسافة تساوي بُعدها عن مستقيم ثابت يُسمى الدليل. معادلته القياسية: y² = 4px حيث رأسه الأصل (0,0)، وبؤرته (p,0)، ودليله x = -p، ومحوره محور x، وطول وتره البؤري العمودي 4p. اختلافه المركزي e = 1 دائمًا.'
+  },
+  {
+    q: 'أثبت أن شرط تماس المستقيم y = mx + c مع القطع المكافئ y² = 4ax هو c = a/m.',
+    a: 'لإيجاد تقاطع المستقيم y = mx + c مع القطع y² = 4ax، نعوض y = mx + c في المعادلة: (mx + c)² = 4ax، أي m²x² + (2mc - 4a)x + c² = 0. لكي يماس المستقيم القطع يجب أن يكون للمعادلة جذران متساويان، أي المميز = صفر: (2mc - 4a)² - 4m²c² = 0. بالحل: 4m²c² - 16amc + 16a² - 4m²c² = 0، أي -16amc + 16a² = 0، فينتج c = a/m.'
+  },
+  {
+    q: 'اشرح كيف تميز نوع القطع المخروطي من المعادلة العامة من الدرجة الثانية، مع ذكر حالات المميز.',
+    a: 'المعادلة العامة هي: Ax² + Bxy + Cy² + Dx + Ey + F = 0. نحسب المميز B² - 4AC: إذا كان B² - 4AC = 0 فالقطع مكافئ. إذا كان B² - 4AC أصغر من صفر فالقطع ناقص (أو دائرة إذا كان A = C وB = 0). إذا كان B² - 4AC أكبر من صفر فالقطع زائد. حدود الدرجة الثانية تبقى كما هي سواء نقلنا أو أدرنا المحاور.'
+  },
+  {
+    q: 'اشرح العلاقة بين الاختلاف المركزي للقطع الزائد وزاوية خطيه التقاربيين.',
+    a: 'إذا كانت الزاوية بين الخطين التقاربيين للقطع الزائد هي 2θ، فإن ميل أحد التقاربيين هو m = b/a، وبالتالي tan θ = b/a. ثم نحسب sec θ = √(1 + tan²θ) = √(1 + b²/a²) = √(a² + b²)/a. وبما أن c² = a² + b² إذن sec θ = c/a = e. أي أن الاختلاف المركزي للقطع الزائد يساوي قاطع زاوية نصف الزاوية بين خطيه التقاربيين.'
+  },
+  {
+    q: 'اشرح خطوات نقل المحاور في المستوى وكيف تُطبَّق على اختزال المعادلة العامة من الدرجة الثانية.',
+    a: 'نقل المحاور هو إزاحة أصل الإحداثيات من النقطة O(0,0) إلى النقطة O\'(α,β) مع الإبقاء على اتجاه المحاور. علاقات التحويل: x = x\' + α وy = y\' + β. للحصول على الإحداثيات الجديدة: x\' = x - α وy\' = y - β. تطبيق على المعادلة العامة ax² + 2mxy + by² + 2nx + 2Ly + C = 0: نختار (x₀, y₀) بحيث تحقق المعادلتين ax₀ + my₀ + n = 0 وmx₀ + by₀ + L = 0. هذا يحذف حدود الدرجة الأولى من المعادلة الجديدة، وحدود الدرجة الثانية تبقى بدون تغيير.'
+  },
+  {
+    q: 'أثبت أن طول الوتر البؤري العمودي للقطع الناقص x²/a² + y²/b² = 1 يساوي 2b²/a.',
+    a: 'الوتر البؤري العمودي هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. إحداثيات البؤرة هي (ae, 0). عند x = ae نعوض في معادلة القطع: (ae)²/a² + y²/b² = 1، أي e² + y²/b² = 1، فينتج y²/b² = 1 - e² = b²/a² (لأن b² = a²(1 - e²))، إذن y² = b⁴/a²، فينتج y = ±b²/a. إذن طرفا الوتر هما (ae, b²/a) و(ae, -b²/a)، وطوله = 2b²/a.'
+  }
+];
+
+// ============================================================
+// DATA: CHEATSHEET ACCORDION
+// ============================================================
+const ACCORDION_DATA = [
+  {
+    title: '📐 معادلات القطوع الثلاثة القياسية',
+    content: `
+      <table class="formula-table">
+        <tr><th>الخاصية</th><th>مكافئ</th><th>ناقص</th><th>زائد</th></tr>
+        <tr><td>المعادلة</td><td class="formula" style="font-size:0.7rem">y²=4px</td><td class="formula" style="font-size:0.7rem">x²/a²+y²/b²=1</td><td class="formula" style="font-size:0.7rem">x²/a²−y²/b²=1</td></tr>
+        <tr><td>البؤرة</td><td>(p,0)</td><td>(±ae,0)</td><td>(±ae,0)</td></tr>
+        <tr><td>الدليل</td><td>x = −p</td><td>x = ±a/e</td><td>x = ±a/e</td></tr>
+        <tr><td>الرأس</td><td>(0,0)</td><td>(±a,0)</td><td>(±a,0)</td></tr>
+        <tr><td>e</td><td style="color:#00f5ff;font-weight:700">e = 1</td><td style="color:#39ff14;font-weight:700">e &lt; 1</td><td style="color:#ff0090;font-weight:700">e &gt; 1</td></tr>
+        <tr><td>الوتر العمودي</td><td>4p</td><td>2b²/a</td><td>2b²/a</td></tr>
+      </table>
+    `
+  },
+  {
+    title: '🔗 العلاقات بين a, b, c, e',
+    content: `
+      <div style="display:flex;flex-direction:column;gap:0.7rem;">
+        <div style="background:rgba(0,245,255,0.05);border-right:3px solid var(--neon-cyan);padding:0.7rem;border-radius:0.4rem;">
+          <div style="font-size:0.75rem;color:var(--neon-cyan);font-weight:700;margin-bottom:0.3rem;">القطع الناقص (e &lt; 1)</div>
+          <div class="formula">b² = a²(1 − e²)</div><br>
+          <div class="formula">c² = a² − b²</div><br>
+          <div class="formula">e = c/a = √(a²−b²)/a</div>
+        </div>
+        <div style="background:rgba(255,0,144,0.05);border-right:3px solid var(--neon-pink);padding:0.7rem;border-radius:0.4rem;">
+          <div style="font-size:0.75rem;color:var(--neon-pink);font-weight:700;margin-bottom:0.3rem;">القطع الزائد (e &gt; 1)</div>
+          <div class="formula">b² = a²(e² − 1)</div><br>
+          <div class="formula">c² = a² + b²</div><br>
+          <div class="formula">e = c/a = √(a²+b²)/a</div>
+        </div>
+        <div style="background:rgba(57,255,20,0.05);border-right:3px solid var(--neon-green);padding:0.7rem;border-radius:0.4rem;">
+          <div style="font-size:0.75rem;color:var(--neon-green);font-weight:700;margin-bottom:0.3rem;">القطع الزائد القائم</div>
+          <div class="formula">a = b ← e = √2</div>
+          <div style="font-size:0.75rem;color:#94a3b8;margin-top:0.3rem;">الخطوط التقاربية متعامدة</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: '📏 شروط التماس للقطوع الثلاثة',
+    content: `
+      <div style="display:flex;flex-direction:column;gap:0.8rem;">
+        <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
+          <div style="font-size:0.72rem;color:var(--neon-cyan);margin-bottom:0.3rem;">القطع المكافئ y²=4ax</div>
+          <div style="font-size:0.78rem;">شرط تماس y = mx+c : <span class="keyword" style="font-size:0.85rem">c = a/m</span></div>
+          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">نقطة التماس: (a/m², 2a/m)</div>
+        </div>
+        <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
+          <div style="font-size:0.72rem;color:var(--neon-green);margin-bottom:0.3rem;">القطع الناقص x²/a²+y²/b²=1</div>
+          <div style="font-size:0.78rem;">شرط تماس y = mx+c : <span class="keyword-green" style="font-size:0.85rem">c² = a²m² + b²</span></div>
+          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">معادلة المماس: y = mx ± √(a²m²+b²)</div>
+        </div>
+        <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
+          <div style="font-size:0.72rem;color:var(--neon-pink);margin-bottom:0.3rem;">القطع الزائد x²/a²−y²/b²=1</div>
+          <div style="font-size:0.78rem;">شرط تماس y = mx+c : <span class="keyword-pink" style="font-size:0.85rem">c² = a²m² − b²</span></div>
+          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">معادلة المماس: y = mx ± √(a²m²−b²)</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: '🔄 معادلات تغيير المحاور',
+    content: `
+      <div style="display:flex;flex-direction:column;gap:0.8rem;">
+        <div style="background:rgba(191,0,255,0.05);border:1px solid rgba(191,0,255,0.2);border-radius:0.6rem;padding:0.8rem;">
+          <div style="color:var(--neon-purple);font-weight:700;font-size:0.75rem;margin-bottom:0.5rem;">① نقل المحاور إلى (α, β)</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">x = x' + α</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">y = y' + β</div>
+          <div style="font-size:0.7rem;color:#94a3b8;margin-top:0.3rem;">يحذف: حدود الدرجة الأولى (x, y)</div>
+        </div>
+        <div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.2);border-radius:0.6rem;padding:0.8rem;">
+          <div style="color:var(--neon-cyan);font-weight:700;font-size:0.75rem;margin-bottom:0.5rem;">② دوران المحاور بزاوية θ</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">x = x'cosθ − y'sinθ</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">y = x'sinθ + y'cosθ</div>
+          <div style="font-size:0.7rem;color:#94a3b8;margin-top:0.3rem;">يحذف: الحد xy</div>
+        </div>
+        <div style="background:rgba(255,230,0,0.05);border:1px solid rgba(255,230,0,0.2);border-radius:0.6rem;padding:0.8rem;">
+          <div style="color:var(--neon-yellow);font-weight:700;font-size:0.75rem;margin-bottom:0.5rem;">③ زاوية لحذف xy من ax²+2mxy+by²+...=0</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">tan(2θ) = 2m/(a−b)</div>
+          <div style="font-size:0.7rem;color:#94a3b8;margin-top:0.3rem;">إذا a=b → θ = 45°</div>
+        </div>
+        <div style="background:rgba(57,255,20,0.05);border:1px solid rgba(57,255,20,0.2);border-radius:0.6rem;padding:0.8rem;">
+          <div style="color:var(--neon-green);font-weight:700;font-size:0.75rem;margin-bottom:0.5rem;">④ نقل+دوران في آن واحد</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">x = α + x'cosθ − y'sinθ</div>
+          <div class="formula" style="display:block;margin:0.2rem 0">y = β + x'sinθ + y'cosθ</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: '📊 معادلات المماس والعمودي',
+    content: `
+      <div style="display:flex;flex-direction:column;gap:0.8rem;">
+        <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
+          <div style="font-size:0.72rem;color:var(--neon-cyan);font-weight:700;margin-bottom:0.4rem;">مكافئ y²=4ax عند (x₁,y₁)</div>
+          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword">yy₁ = 2a(x+x₁)</span></div>
+          <div style="font-size:0.78rem;">عمودي: (x−x₁)/(x₁/a²) = (y−y₁)/(y₁/b²)</div>
+        </div>
+        <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
+          <div style="font-size:0.72rem;color:var(--neon-green);font-weight:700;margin-bottom:0.4rem;">ناقص x²/a²+y²/b²=1 عند (x₁,y₁)</div>
+          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-green">xx₁/a² + yy₁/b² = 1</span></div>
+          <div style="font-size:0.78rem;">عمودي: (x−x₁)/(x₁/a²) = (y−y₁)/(y₁/b²)</div>
+        </div>
+        <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
+          <div style="font-size:0.72rem;color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">زائد x²/a²−y²/b²=1 عند (x₁,y₁)</div>
+          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-pink">xx₁/a² − yy₁/b² = 1</span></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: '🧮 المعادلات البارامترية',
+    content: `
+      <table class="formula-table">
+        <tr><th>القطع</th><th>x =</th><th>y =</th></tr>
+        <tr><td style="color:var(--neon-cyan)">مكافئ</td><td>at²</td><td>2at</td></tr>
+        <tr><td style="color:var(--neon-green)">ناقص</td><td>a cos(t)</td><td>b sin(t)</td></tr>
+        <tr><td style="color:var(--neon-pink)">زائد (مثلثي)</td><td>a sec(θ)</td><td>b tan(θ)</td></tr>
+        <tr><td style="color:var(--neon-purple)">زائد (زائدي)</td><td>a cosh(t)</td><td>b sinh(t)</td></tr>
+      </table>
+    `
+  },
+  {
+    title: '🎯 الخطوط التقاربية للقطع الزائد',
+    content: `
+      <div style="display:flex;flex-direction:column;gap:0.6rem;font-size:0.82rem;">
+        <div style="background:rgba(255,0,144,0.05);border:1px solid rgba(255,0,144,0.2);border-radius:0.5rem;padding:0.7rem;">
+          <div style="color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">قطع x²/a²−y²/b²=1 (محوره X)</div>
+          <div class="formula">y = ±(b/a)x</div>
+          <div style="margin-top:0.4rem;color:#94a3b8;font-size:0.72rem;">المعادلة المشتركة: x²/a²−y²/b²=0</div>
+        </div>
+        <div style="background:rgba(191,0,255,0.05);border:1px solid rgba(191,0,255,0.2);border-radius:0.5rem;padding:0.7rem;">
+          <div style="color:var(--neon-purple);font-weight:700;margin-bottom:0.4rem;">قطع y²/a²−x²/b²=1 (محوره Y)</div>
+          <div class="formula">y = ±(a/b)x</div>
+        </div>
+        <div style="background:rgba(255,230,0,0.05);border:1px solid rgba(255,230,0,0.2);border-radius:0.5rem;padding:0.7rem;">
+          <div style="color:var(--neon-yellow);font-weight:700;margin-bottom:0.4rem;">بعد نقل المركز إلى (h,k)</div>
+          <div class="formula">(y−k) = ±(b/a)(x−h)</div>
+        </div>
+      </div>
+    `
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentCardIndex = 0;
+let filteredCards = [...ALL_CARDS];
+let isFlipped = false;
+let currentVoiceIndex = 0;
+let mediaRecorder = null;
+let audioChunks = [];
+let isRecording = false;
+let waveAnimFrame = null;
+let deferredInstallPrompt = null;
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function switchSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  btn.classList.add('active');
+
+  const info = { flashcards:'البطاقات', whatif:'سيناريوهات', voice:'الإلقاء', cheat:'المرجع' };
+  document.getElementById('header-info').textContent = info[name] || name;
+  window.scrollTo(0,0);
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+const BADGE_MAP = {
+  parabola:{ cls:'badge-parabola', label:'مكافئ' },
+  ellipse:{ cls:'badge-ellipse', label:'ناقص' },
+  hyperbola:{ cls:'badge-hyperbola', label:'زائد' },
+  axes:{ cls:'badge-axes', label:'تغيير محاور' },
+  general:{ cls:'badge-general', label:'عام' }
+};
+
+function renderCard() {
+  const card = filteredCards[currentCardIndex];
+  if (!card) return;
+  const inner = document.getElementById('flashcard-inner');
+  if (isFlipped) { inner.classList.remove('flipped'); isFlipped = false; }
+
+  document.getElementById('fc-question').innerHTML = card.q;
+  document.getElementById('fc-answer').innerHTML = card.a;
+
+  const total = filteredCards.length;
+  document.getElementById('card-counter-text').textContent = `البطاقة ${currentCardIndex+1} من ${total}`;
+  document.getElementById('cards-progress').style.width = `${((currentCardIndex+1)/total)*100}%`;
+
+  const badge = BADGE_MAP[card.cat] || BADGE_MAP.general;
+  const badgeEl = document.getElementById('card-type-badge');
+  badgeEl.className = 'type-badge ' + badge.cls;
+  badgeEl.textContent = badge.label;
+}
+
+function flipCard() {
+  const inner = document.getElementById('flashcard-inner');
+  isFlipped = !isFlipped;
+  inner.classList.toggle('flipped', isFlipped);
+}
+
+function nextCard() {
+  if (isFlipped) { document.getElementById('flashcard-inner').classList.remove('flipped'); isFlipped = false; setTimeout(()=>{ currentCardIndex = (currentCardIndex+1) % filteredCards.length; renderCard(); },300); }
+  else { currentCardIndex = (currentCardIndex+1) % filteredCards.length; renderCard(); }
+}
+
+function prevCard() {
+  if (isFlipped) { document.getElementById('flashcard-inner').classList.remove('flipped'); isFlipped = false; setTimeout(()=>{ currentCardIndex = (currentCardIndex-1+filteredCards.length) % filteredCards.length; renderCard(); },300); }
+  else { currentCardIndex = (currentCardIndex-1+filteredCards.length) % filteredCards.length; renderCard(); }
+}
+
+function filterCards(cat) {
+  currentCardIndex = 0;
+  isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('flipped');
+  filteredCards = cat === 'all' ? [...ALL_CARDS] : ALL_CARDS.filter(c=>c.cat===cat);
+  renderCard();
+}
+
+// Tap to flip
+document.getElementById('flashcard-wrap').addEventListener('click', function(e) {
+  if (!e.target.closest('button')) flipCard();
+});
+
+// ============================================================
+// WHAT-IF
+// ============================================================
+function initWhatIf() {
+  const container = document.getElementById('whatif-list');
+  container.innerHTML = WHATIF.map((item,i) => `
+    <div class="whatif-card">
+      <div onclick="toggleWhatIf(${i})" style="cursor:pointer;display:flex;align-items:flex-start;gap:0.7rem;">
+        <span style="font-size:1.5rem;flex-shrink:0">${item.icon}</span>
+        <div>
+          <div style="font-size:0.92rem;font-weight:600;color:#f1f5f9;line-height:1.5;">${item.q}</div>
+          <div style="font-size:0.68rem;color:#475569;margin-top:0.3rem;">👆 اضغط للكشف عن الإجابة</div>
+        </div>
+      </div>
+      <div class="whatif-answer" id="wi-ans-${i}">
+        <div style="font-size:0.85rem;line-height:1.8;color:#cbd5e0;">${item.a}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleWhatIf(i) {
+  const ans = document.getElementById('wi-ans-'+i);
+  ans.classList.toggle('show');
+}
+
+// ============================================================
+// VOICE STUDIO
+// ============================================================
+function initVoice() {
+  const sel = document.getElementById('voice-q-select');
+  sel.innerHTML = VOICE_QUESTIONS.map((q,i)=>`<option value="${i}">سؤال ${i+1}: ${q.q.substring(0,40)}...</option>`).join('');
+  loadVoiceQuestion();
+}
+
+function loadVoiceQuestion() {
+  const sel = document.getElementById('voice-q-select');
+  currentVoiceIndex = parseInt(sel.value);
+  document.getElementById('voice-question-text').textContent = VOICE_QUESTIONS[currentVoiceIndex].q;
+  document.getElementById('model-answer-text').innerHTML = VOICE_QUESTIONS[currentVoiceIndex].a;
+  document.getElementById('model-answer-wrap').classList.remove('show');
+  document.getElementById('audio-player-wrap').style.display = 'none';
+  if (isRecording) stopRecording();
+}
+
+function nextVoiceQ() {
+  currentVoiceIndex = (currentVoiceIndex+1)%VOICE_QUESTIONS.length;
+  document.getElementById('voice-q-select').value = currentVoiceIndex;
+  loadVoiceQuestion();
+}
+
+function prevVoiceQ() {
+  currentVoiceIndex = (currentVoiceIndex-1+VOICE_QUESTIONS.length)%VOICE_QUESTIONS.length;
+  document.getElementById('voice-q-select').value = currentVoiceIndex;
+  loadVoiceQuestion();
+}
+
+function toggleModelAnswer() {
+  document.getElementById('model-answer-wrap').classList.toggle('show');
+}
+
+async function toggleRecording() {
+  if (!isRecording) { await startRecording(); }
+  else { stopRecording(); }
+}
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    mediaRecorder.ondataavailable = e => { if(e.data.size>0) audioChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(audioChunks, { type:'audio/webm' });
+      const url = URL.createObjectURL(blob);
+      const audio = document.getElementById('audio-playback');
+      audio.src = url;
+      document.getElementById('audio-player-wrap').style.display = 'block';
+      stream.getTracks().forEach(t=>t.stop());
+    };
+    mediaRecorder.start();
+    isRecording = true;
+    document.getElementById('record-btn').classList.add('recording');
+    document.getElementById('record-icon').textContent = '⏹️';
+    document.getElementById('record-status').innerHTML = '<span style="color:#ff0090">● جاري التسجيل...</span>';
+    document.getElementById('waveform').style.display = 'flex';
+    animateWaveform();
+  } catch(err) {
+    document.getElementById('record-status').textContent = '❌ لا يمكن الوصول للميكروفون';
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+  isRecording = false;
+  document.getElementById('record-btn').classList.remove('recording');
+  document.getElementById('record-icon').textContent = '🎙️';
+  document.getElementById('record-status').textContent = 'تم التسجيل ✅';
+  document.getElementById('waveform').style.display = 'none';
+  if (waveAnimFrame) cancelAnimationFrame(waveAnimFrame);
+}
+
+function animateWaveform() {
+  const bars = document.querySelectorAll('.wave-bar');
+  bars.forEach(bar => {
+    bar.style.height = (Math.random()*22+6)+'px';
+  });
+  waveAnimFrame = requestAnimationFrame(animateWaveform);
+}
+
+// ============================================================
+// CHEATSHEET ACCORDION
+// ============================================================
+function initAccordion() {
+  const container = document.getElementById('accordion-container');
+  container.innerHTML = ACCORDION_DATA.map((item,i) => `
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(${i},this)">
+        <span>${item.title}</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-body" id="acc-body-${i}">
+        ${item.content}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAccordion(i, btn) {
+  const body = document.getElementById('acc-body-'+i);
+  const isOpen = body.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.accordion-header').forEach(h=>h.classList.remove('open'));
+  if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+}
+
+// ============================================================
+// PWA
+// ============================================================
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  document.getElementById('pwa-install-item').style.display = 'list-item';
+});
+
+document.getElementById('fl-install-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    if (outcome === 'accepted') document.getElementById('pwa-install-item').style.display = 'none';
+    deferredInstallPrompt = null;
+  }
+});
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderCard();
+  initWhatIf();
+  initVoice();
+  initAccordion();
+});
+</script>
+
+<!-- ============================================================
+     manifest.json (inline as comment for reference)
+     Create manifest.json file:
+{
+  "name": "Flasha App - القطاعات المخروطية",
+  "short_name": "Flasha",
+  "description": "مرجع الشفوي النهائي للقطاعات المخروطية",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#00f5ff",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "icon-192.png","sizes": "192x192","type": "image/png"},
+    {"src": "icon-512.png","sizes": "512x512","type": "image/png"}
+  ]
+}
+
+     sw.js (Cache-First Service Worker):
+const CACHE_NAME = 'flasha-conic-v1';
+const URLS = [
+  '/',
+  '/index.html',
+  'https://cdn.tailwindcss.com',
+  'https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-styles.css',
+  'https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-scripts.js'
+];
+self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(URLS))));
+self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).then(res => { const clone = res.clone(); caches.open(CACHE_NAME).then(c=>c.put(e.request,clone)); return res; }))));
+============================================================ -->
+
+</body>
+</html>

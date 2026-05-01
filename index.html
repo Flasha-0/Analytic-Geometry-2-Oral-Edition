@@ -221,6 +221,8 @@ tailwind.config = {
     color: #cbd5e0;
   }
   .formula-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  /* إجبار المتصفح على عرض الإحداثيات من اليسار لليمين */
+  .math-ltr { direction: ltr; display: inline-block; }
 
   /* ===== BOTTOM NAV ===== */
   #bottom-nav {
@@ -702,112 +704,112 @@ const ALL_CARDS = [
   {
     id:1, cat:'general',
     q:'ما هو تعريف القطع المخروطي بشكل عام وما هو الاختلاف المركزي e؟',
-    a:'القطع المخروطي هو <span class="keyword">المحل الهندسي</span> للنقطة التي تتحرك بحيث تكون العلاقة بين بُعدها عن نقطة ثابتة (البؤرة) وبُعدها عن مستقيم ثابت (الدليل) <span class="keyword-yellow">نسبة ثابتة تُسمى الاختلاف المركزي e</span>. إذا كان <span class="keyword">e = 1</span> فمكافئ، إذا كان <span class="keyword-green">e &lt; 1</span> فناقص، إذا كان <span class="keyword-pink">e &gt; 1</span> فزائد.'
+    a:'القطع المخروطي هو <span class="keyword">المحل الهندسي</span> للنقطة التي تتحرك بحيث تكون العلاقة بين بُعدها عن نقطة ثابتة (البؤرة) وبُعدها عن مستقيم ثابت (الدليل) <span class="keyword-yellow">نسبة ثابتة تُسمى الاختلاف المركزي e</span>. إذا كان <span class="keyword math-ltr">e = 1</span> فمكافئ، إذا كان <span class="keyword-green math-ltr">e &lt; 1</span> فناقص، إذا كان <span class="keyword-pink math-ltr">e &gt; 1</span> فزائد.'
   },
   {
     id:2, cat:'parabola',
     q:'ما هو التعريف الهندسي للقطع المكافئ وما هي معادلته القياسية؟',
-    a:'القطع المكافئ هو المحل الهندسي للنقاط الواقعة في المستوى والتي تبعد عن <span class="keyword">البؤرة (p,0)</span> بمسافة مساوية لبُعدها عن <span class="keyword-yellow">الدليل x = -p</span>. معادلته القياسية: <span class="keyword">y² = 4px</span>. رأسه الأصل، محوره محور x، وطول وتره البؤري العمودي <span class="keyword-green">4p</span>.'
+    a:'القطع المكافئ هو المحل الهندسي للنقاط الواقعة في المستوى والتي تبعد عن <span class="keyword">البؤرة <span class="math-ltr">(p,0)</span></span> بمسافة مساوية لبُعدها عن <span class="keyword-yellow">الدليل <span class="math-ltr">x = -p</span></span>. معادلته القياسية: <span class="keyword math-ltr">y² = 4px</span>. رأسه الأصل، محوره محور x، وطول وتره البؤري العمودي <span class="keyword-green math-ltr">4p</span>.'
   },
   {
     id:3, cat:'parabola',
     q:'كيف يختلف اتجاه القطع المكافئ بحسب إشارة p وبحسب المحور؟',
-    a:'إذا كانت <span class="keyword">y² = 4px</span>: المحور أفقي، p &gt; 0 ينفتح يمينًا، p &lt; 0 ينفتح يسارًا.<br>إذا كانت <span class="keyword-green">x² = 4py</span>: المحور رأسي، p &gt; 0 ينفتح أعلى، p &lt; 0 ينفتح أسفل.<br>الفرق الجوهري: <span class="keyword-yellow">تبادل موضع x² و y²</span> يعني تبادل اتجاه المحور.'
+    a:'إذا كانت <span class="keyword math-ltr">y² = 4px</span>: المحور أفقي، p &gt; 0 ينفتح يمينًا، p &lt; 0 ينفتح يسارًا.<br>إذا كانت <span class="keyword-green math-ltr">x² = 4py</span>: المحور رأسي، p &gt; 0 ينفتح أعلى، p &lt; 0 ينفتح أسفل.<br>الفرق الجوهري: <span class="keyword-yellow">تبادل موضع x² و y²</span> يعني تبادل اتجاه المحور.'
   },
   {
     id:4, cat:'parabola',
     q:'ما هو شرط تماس المستقيم y = mx + c مع القطع المكافئ y² = 4ax؟',
-    a:'شرط التماس هو أن يكون جذرا معادلة التقاطع متساويين. بعد التعويض والتبسيط نجد الشرط: <span class="keyword">c = a/m</span>. أي أن المستقيم y = mx + a/m يمس القطع المكافئ دائمًا مهما كانت قيمة m. نقطة التماس هي <span class="keyword-green">(a/m², 2a/m)</span>.'
+    a:'شرط التماس هو أن يكون جذرا معادلة التقاطع متساويين. بعد التعويض والتبسيط نجد الشرط: <span class="keyword math-ltr">c = a/m</span>. أي أن المستقيم <span class="math-ltr">y = mx + a/m</span> يمس القطع المكافئ دائمًا مهما كانت قيمة m. نقطة التماس هي <span class="keyword-green math-ltr">(a/m², 2a/m)</span>.'
   },
   {
     id:5, cat:'parabola',
     q:'ما هي معادلة المماس للقطع المكافئ y² = 4ax عند النقطة (x₁, y₁)؟',
-    a:'معادلة المماس للقطع المكافئ y² = 4ax عند النقطة (x₁, y₁) هي: <span class="keyword">yy₁ = 2a(x + x₁)</span>. هذه المعادلة تُستخرج بتفاضل المعادلة ثم تطبيق معادلة المماس بميل 2a/y₁.'
+    a:'معادلة المماس للقطع المكافئ <span class="math-ltr">y² = 4ax</span> عند النقطة <span class="math-ltr">(x₁, y₁)</span> هي: <span class="keyword math-ltr">yy₁ = 2a(x + x₁)</span>. هذه المعادلة تُستخرج بتفاضل المعادلة ثم تطبيق معادلة المماس بميل <span class="math-ltr">2a/y₁</span>.'
   },
   {
     id:6, cat:'parabola',
     q:'ما هي المعادلات البارامترية للقطع المكافئ y² = 4ax؟',
-    a:'المعادلات البارامترية للقطع المكافئ هي: <span class="keyword">x = at²</span> و <span class="keyword-green">y = 2at</span>. بحذف البارامتر t بين المعادلتين نحصل على y² = 4ax. أي نقطة على القطع يمكن تمثيلها بـ <span class="keyword-yellow">(at², 2at)</span>.'
+    a:'المعادلات البارامترية للقطع المكافئ هي: <span class="keyword math-ltr">x = at²</span> و <span class="keyword-green math-ltr">y = 2at</span>. بحذف البارامتر t بين المعادلتين نحصل على <span class="math-ltr">y² = 4ax</span>. أي نقطة على القطع يمكن تمثيلها بـ <span class="keyword-yellow math-ltr">(at², 2at)</span>.'
   },
   {
     id:7, cat:'ellipse',
     q:'ما هو التعريف الهندسي للقطع الناقص وما هي علاقة b² = a²(1-e²)؟',
-    a:'القطع الناقص هو المحل الهندسي لنقطة تتحرك بحيث <span class="keyword">مجموع بُعدَيها عن البؤرتين ثابت = 2a</span>. أي PF₁ + PF₂ = 2a. العلاقة: <span class="keyword-green">b² = a²(1 - e²)</span> حيث e &lt; 1، وهذا يعني b &lt; a. البؤرتان على المحور الأكبر عند (±ae, 0).'
+    a:'القطع الناقص هو المحل الهندسي لنقطة تتحرك بحيث <span class="keyword">مجموع بُعدَيها عن البؤرتين ثابت = 2a</span>. أي <span class="math-ltr">PF₁ + PF₂ = 2a</span>. العلاقة: <span class="keyword-green math-ltr">b² = a²(1 - e²)</span> حيث <span class="math-ltr">e &lt; 1</span>، وهذا يعني <span class="math-ltr">b &lt; a</span>. البؤرتان على المحور الأكبر عند <span class="math-ltr">(±ae, 0)</span>.'
   },
   {
     id:8, cat:'ellipse',
     q:'ما هي المعادلة القياسية للقطع الناقص وأين تقع بؤرتاه ودليلاه؟',
-    a:'المعادلة القياسية: <span class="keyword">x²/a² + y²/b² = 1</span> حيث a &gt; b. البؤرتان: <span class="keyword-green">(±ae, 0)</span>. الدليلان: <span class="keyword-yellow">x = ±a/e</span>. مركزه الأصل. محوره الأكبر يوازي x بطول 2a، ومحوره الأصغر يوازي y بطول 2b.'
+    a:'المعادلة القياسية: <span class="keyword math-ltr">x²/a² + y²/b² = 1</span> حيث a &gt; b. البؤرتان: <span class="keyword-green math-ltr">(±ae, 0)</span>. الدليلان: <span class="keyword-yellow math-ltr">x = ±a/e</span>. مركزه الأصل. محوره الأكبر يوازي x بطول 2a، ومحوره الأصغر يوازي y بطول 2b.'
   },
   {
     id:9, cat:'ellipse',
     q:'كيف تعرف الوتر البؤري العمودي للقطع الناقص وما طوله؟',
-    a:'الوتر البؤري العمودي هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. يقطع القطع الناقص في نقطتين بؤريتين. طول نصف الوتر البؤري العمودي: <span class="keyword">L = b²/a</span>. إذن <span class="keyword-green">طول الوتر الكامل = 2b²/a</span>. يُستخرج بتعويض x = ae في معادلة القطع.'
+    a:'الوتر البؤري العمودي هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. يقطع القطع الناقص في نقطتين بؤريتين. طول نصف الوتر البؤري العمودي: <span class="keyword math-ltr">L = b²/a</span>. إذن <span class="keyword-green">طول الوتر الكامل = <span class="math-ltr">2b²/a</span></span>. يُستخرج بتعويض <span class="math-ltr">x = ae</span> في معادلة القطع.'
   },
   {
     id:10, cat:'ellipse',
     q:'ما هو شرط تماس المستقيم y = mx + c مع القطع الناقص x²/a² + y²/b² = 1؟',
-    a:'بتعويض معادلة المستقيم في معادلة القطع وتساوي المميز بالصفر نجد الشرط: <span class="keyword">c² = a²m² + b²</span>. أي المستقيم y = mx ± √(a²m² + b²) يمس القطع الناقص لأي ميل m. العلاقة تُظهر أن المماس يتوقف على a وb وm فقط.'
+    a:'بتعويض معادلة المستقيم في معادلة القطع وتساوي المميز بالصفر نجد الشرط: <span class="keyword math-ltr">c² = a²m² + b²</span>. أي المستقيم <span class="math-ltr">y = mx ± √(a²m² + b²)</span> يمس القطع الناقص لأي ميل m. العلاقة تُظهر أن المماس يتوقف على a وb وm فقط.'
   },
   {
     id:11, cat:'ellipse',
     q:'ما هي معادلة المماس للقطع الناقص عند النقطة (x₁, y₁)؟',
-    a:'معادلة المماس للقطع الناقص x²/a² + y²/b² = 1 عند النقطة (x₁, y₁) هي: <span class="keyword">xx₁/a² + yy₁/b² = 1</span>. يُلاحظ أن هذه المعادلة تُشبه معادلة القطع بتبديل x² بـ xx₁ وy² بـ yy₁ وهذه <span class="keyword-green">الحيلة المركزية</span> تنطبق على الناقص والزائد.'
+    a:'معادلة المماس للقطع الناقص <span class="math-ltr">x²/a² + y²/b² = 1</span> عند النقطة <span class="math-ltr">(x₁, y₁)</span> هي: <span class="keyword math-ltr">xx₁/a² + yy₁/b² = 1</span>. يُلاحظ أن هذه المعادلة تُشبه معادلة القطع بتبديل x² بـ xx₁ وy² بـ yy₁ وهذه <span class="keyword-green">الحيلة المركزية</span> تنطبق على الناقص والزائد.'
   },
   {
     id:12, cat:'hyperbola',
     q:'ما هو التعريف الهندسي للقطع الزائد وكيف يختلف عن القطع الناقص؟',
-    a:'القطع الزائد هو المحل الهندسي لنقطة تتحرك بحيث <span class="keyword">فرق بُعدَيها عن البؤرتين ثابت = 2a</span>. أي |PF₁ - PF₂| = 2a. الفرق عن الناقص: الناقص يستخدم <span class="keyword-green">المجموع</span> (2a)، أما الزائد فيستخدم <span class="keyword-pink">الفرق</span> (2a). للزائد e &gt; 1، وللناقص e &lt; 1.'
+    a:'القطع الزائد هو المحل الهندسي لنقطة تتحرك بحيث <span class="keyword">فرق بُعدَيها عن البؤرتين ثابت = 2a</span>. أي <span class="math-ltr">|PF₁ - PF₂| = 2a</span>. الفرق عن الناقص: الناقص يستخدم <span class="keyword-green">المجموع</span> (2a)، أما الزائد فيستخدم <span class="keyword-pink">الفرق</span> (2a). للزائد <span class="math-ltr">e &gt; 1</span>، وللناقص <span class="math-ltr">e &lt; 1</span>.'
   },
   {
     id:13, cat:'hyperbola',
     q:'ما هي المعادلة القياسية للقطع الزائد وما هي الخطوط التقاربية؟',
-    a:'المعادلة القياسية: <span class="keyword">x²/a² - y²/b² = 1</span>. العلاقة: <span class="keyword-green">b² = a²(e² - 1)</span> حيث e &gt; 1. الخطوط التقاربية: <span class="keyword-yellow">y = ±(b/a)x</span>. إذا كان المحور الأكبر هو Y (رأسي): y²/a² - x²/b² = 1 والخطوط التقاربية: y = ±(a/b)x.'
+    a:'المعادلة القياسية: <span class="keyword math-ltr">x²/a² - y²/b² = 1</span>. العلاقة: <span class="keyword-green math-ltr">b² = a²(e² - 1)</span> حيث <span class="math-ltr">e &gt; 1</span>. الخطوط التقاربية: <span class="keyword-yellow math-ltr">y = ±(b/a)x</span>. إذا كان المحور الأكبر هو Y (رأسي): <span class="math-ltr">y²/a² - x²/b² = 1</span> والخطوط التقاربية: <span class="math-ltr">y = ±(a/b)x</span>.'
   },
   {
     id:14, cat:'hyperbola',
     q:'ما هو القطع الزائد القائم وما خواصه المميزة؟',
-    a:'القطع الزائد القائم هو الذي <span class="keyword">خطاه التقاربيان متعامدان</span>. شرط التعامد: ميل₁ × ميل₂ = -1 أي (b/a)×(-b/a) = -1 فينتج <span class="keyword-green">a = b</span>. معادلته: <span class="keyword">x² - y² = a²</span>. اختلافه المركزي دائمًا <span class="keyword-yellow">e = √2</span> لأن b² = a²(e²-1) يصبح a² = a²(e²-1) فينتج e² = 2.'
+    a:'القطع الزائد القائم هو الذي <span class="keyword">خطاه التقاربيان متعامدان</span>. شرط التعامد: ميل₁ × ميل₂ = -1 أي <span class="math-ltr">(b/a)×(-b/a) = -1</span> فينتج <span class="keyword-green math-ltr">a = b</span>. معادلته: <span class="keyword math-ltr">x² - y² = a²</span>. اختلافه المركزي دائمًا <span class="keyword-yellow math-ltr">e = √2</span> لأن <span class="math-ltr">b² = a²(e²-1)</span> يصبح <span class="math-ltr">a² = a²(e²-1)</span> فينتج <span class="math-ltr">e² = 2</span>.'
   },
   {
     id:15, cat:'hyperbola',
     q:'ما هي الخطوط التقاربية للقطع الزائد وكيف تختلف عن معادلة القطع نفسه؟',
-    a:'خطوط التقارب تتقاطع عند المركز وتقترب من القطع إلى ما لا نهاية. المعادلة المشتركة للخطين: <span class="keyword">x²/a² - y²/b² = 0</span>. أما معادلة القطع الزائد نفسه: <span class="keyword-green">x²/a² - y²/b² = 1</span>. الفرق الوحيد في <span class="keyword-yellow">الحد الثابت</span> (0 للتقاربيين، 1 للقطع).'
+    a:'خطوط التقارب تتقاطع عند المركز وتقترب من القطع إلى ما لا نهاية. المعادلة المشتركة للخطين: <span class="keyword math-ltr">x²/a² - y²/b² = 0</span>. أما معادلة القطع الزائد نفسه: <span class="keyword-green math-ltr">x²/a² - y²/b² = 1</span>. الفرق الوحيد في <span class="keyword-yellow">الحد الثابت</span> (0 للتقاربيين، 1 للقطع).'
   },
   {
     id:16, cat:'hyperbola',
     q:'ما هو الوتر البؤري العمودي للقطع الزائد وما طوله؟',
-    a:'الوتر البؤري العمودي للقطع الزائد هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. طول نصفه: <span class="keyword">L = b²/a</span>، وطوله الكامل: <span class="keyword-green">2L = 2b²/a</span>. يُستخرج بتعويض x = ae في معادلة القطع. هذه القيمة <span class="keyword-yellow">نفس</span> قيمة الوتر البؤري للقطع الناقص.'
+    a:'الوتر البؤري العمودي للقطع الزائد هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. طول نصفه: <span class="keyword math-ltr">L = b²/a</span>، وطوله الكامل: <span class="keyword-green math-ltr">2L = 2b²/a</span>. يُستخرج بتعويض <span class="math-ltr">x = ae</span> في معادلة القطع. هذه القيمة <span class="keyword-yellow">نفس</span> قيمة الوتر البؤري للقطع الناقص.'
   },
   {
     id:17, cat:'hyperbola',
     q:'ما هو القطع الزائد المرافق وما علاقته بالقطع الأصلي؟',
-    a:'القطع الزائد المرافق لـ x²/a² - y²/b² = 1 هو: <span class="keyword">y²/b² - x²/a² = 1</span> (أو بصيغة أخرى x²/a² - y²/b² = -1). المميز: <span class="keyword-green">محور القطع الأصلي يصبح المحور المرافق</span> للمرافق والعكس. كلا القطعين يشتركان في <span class="keyword-yellow">نفس الخطوط التقاربية y = ±(b/a)x</span>.'
+    a:'القطع الزائد المرافق لـ <span class="math-ltr">x²/a² - y²/b² = 1</span> هو: <span class="keyword math-ltr">y²/b² - x²/a² = 1</span> (أو بصيغة أخرى <span class="math-ltr">x²/a² - y²/b² = -1</span>). المميز: <span class="keyword-green">محور القطع الأصلي يصبح المحور المرافق</span> للمرافق والعكس. كلا القطعين يشتركان في <span class="keyword-yellow">نفس الخطوط التقاربية <span class="math-ltr">y = ±(b/a)x</span></span>.'
   },
   {
     id:18, cat:'axes',
     q:'ما هي قواعد نقل المحاور في المستوى وكيف تُطبَّق على المعادلات؟',
-    a:'عند نقل أصل الإحداثيات إلى النقطة (α, β) تكون العلاقة: <span class="keyword">x = x\' + α</span> و <span class="keyword-green">y = y\' + β</span>. للحصول على الإحداثيات الجديدة: x\' = x - α، y\' = y - β. الهدف: <span class="keyword-yellow">حذف حدود الدرجة الأولى</span> من المعادلة العامة بتحريك المركز إلى نقطة مناسبة.'
+    a:'عند نقل أصل الإحداثيات إلى النقطة <span class="math-ltr">(α, β)</span> تكون العلاقة: <span class="keyword math-ltr">x = x\' + α</span> و <span class="keyword-green math-ltr">y = y\' + β</span>. للحصول على الإحداثيات الجديدة: <span class="math-ltr">x\' = x - α</span>، <span class="math-ltr">y\' = y - β</span>. الهدف: <span class="keyword-yellow">حذف حدود الدرجة الأولى</span> من المعادلة العامة بتحريك المركز إلى نقطة مناسبة.'
   },
   {
     id:19, cat:'axes',
     q:'ما هي قواعد دوران المحاور وما معادلات التحويل؟',
-    a:'عند دوران المحاور بزاوية θ تكون العلاقات: <span class="keyword">x = x\'cosθ - y\'sinθ</span> و <span class="keyword-green">y = x\'sinθ + y\'cosθ</span>. للحصول على الإحداثيات الجديدة: x\' = xcosθ + ysinθ، y\' = -xsinθ + ycosθ. الهدف: <span class="keyword-yellow">حذف الحد xy</span> من المعادلة العامة.'
+    a:'عند دوران المحاور بزاوية θ تكون العلاقات: <span class="keyword math-ltr">x = x\'cosθ - y\'sinθ</span> و <span class="keyword-green math-ltr">y = x\'sinθ + y\'cosθ</span>. للحصول على الإحداثيات الجديدة: <span class="math-ltr">x\' = xcosθ + ysinθ</span>، <span class="math-ltr">y\' = -xsinθ + ycosθ</span>. الهدف: <span class="keyword-yellow">حذف الحد xy</span> من المعادلة العامة.'
   },
   {
     id:20, cat:'axes',
     q:'كيف تجد زاوية الدوران اللازمة لحذف الحد xy من المعادلة العامة؟',
-    a:'المعادلة العامة: ax² + 2mxy + by² + ... = 0. لحذف الحد xy يجب أن يدور المحوران بزاوية θ تعطى بالعلاقة: <span class="keyword">tan(2θ) = 2m/(a - b)</span>. فإذا كان a = b استخدمنا θ = 45°. ونستنتج: <span class="keyword-green">θ = ½ tan⁻¹[2m/(a-b)]</span>.'
+    a:'المعادلة العامة: <span class="math-ltr">ax² + 2mxy + by² + ... = 0</span>. لحذف الحد xy يجب أن يدور المحوران بزاوية θ تعطى بالعلاقة: <span class="keyword math-ltr">tan(2θ) = 2m/(a - b)</span>. فإذا كان a = b استخدمنا θ = 45°. ونستنتج: <span class="keyword-green math-ltr">θ = ½ tan⁻¹[2m/(a-b)]</span>.'
   },
   {
     id:21, cat:'axes',
     q:'كيف تحذف حدود الدرجة الأولى من المعادلة العامة بنقل المحاور؟',
-    a:'لحذف حدي x و y من: ax² + 2mxy + by² + 2nx + 2Ly + C = 0، ننقل إلى نقطة (x₀, y₀) تحقق المعادلتين: <span class="keyword">ax₀ + my₀ + n = 0</span> و <span class="keyword-green">mx₀ + by₀ + L = 0</span>. أي نوجد نقطة تجعل معاملات x و y تساوي صفرًا في المعادلة الجديدة. <span class="keyword-yellow">حدود الدرجة الثانية تبقى كما هي</span>.'
+    a:'لحذف حدي x و y من: <span class="math-ltr">ax² + 2mxy + by² + 2nx + 2Ly + C = 0</span>، ننقل إلى نقطة <span class="math-ltr">(x₀, y₀)</span> تحقق المعادلتين: <span class="keyword math-ltr">ax₀ + my₀ + n = 0</span> و <span class="keyword-green math-ltr">mx₀ + by₀ + L = 0</span>. أي نوجد نقطة تجعل معاملات x و y تساوي صفرًا في المعادلة الجديدة. <span class="keyword-yellow">حدود الدرجة الثانية تبقى كما هي</span>.'
   },
   {
     id:22, cat:'general',
     q:'ما هي المعادلة العامة للدرجة الثانية وكيف تميز نوع القطع المخروطي منها؟',
-    a:'المعادلة العامة: <span class="keyword">Ax² + Bxy + Cy² + Dx + Ey + F = 0</span>. التمييز بالمميز B² - 4AC:<br>• <span class="keyword-yellow">B² - 4AC = 0</span>: قطع مكافئ<br>• <span class="keyword-green">B² - 4AC &lt; 0</span>: قطع ناقص (أو دائرة إذا A=C و B=0)<br>• <span class="keyword-pink">B² - 4AC &gt; 0</span>: قطع زائد'
+    a:'المعادلة العامة: <span class="keyword math-ltr">Ax² + Bxy + Cy² + Dx + Ey + F = 0</span>. التمييز بالمميز <span class="math-ltr">B² - 4AC</span>:<br>• <span class="keyword-yellow math-ltr">B² - 4AC = 0</span>: قطع مكافئ<br>• <span class="keyword-green math-ltr">B² - 4AC &lt; 0</span>: قطع ناقص (أو دائرة إذا A=C و B=0)<br>• <span class="keyword-pink math-ltr">B² - 4AC &gt; 0</span>: قطع زائد'
   },
   {
     id:23, cat:'ellipse',
@@ -817,12 +819,12 @@ const ALL_CARDS = [
   {
     id:24, cat:'hyperbola',
     q:'ما هو الاختلاف المركزي للقطع الزائد وعلاقته بزاوية الخطين التقاربيين؟',
-    a:'إذا كانت الزاوية بين الخطين التقاربيين هي 2θ، فإن: tan θ = b/a. ثم: <span class="keyword">sec θ = √(a² + b²)/a = c/a = e</span>. إذن الاختلاف المركزي يساوي قاطع زاوية نصف زاوية الخطين التقاربيين. <span class="keyword-green">e = sec θ</span> حيث θ هي نصف الزاوية بين التقاربيين.'
+    a:'إذا كانت الزاوية بين الخطين التقاربيين هي 2θ، فإن: <span class="math-ltr">tan θ = b/a</span>. ثم: <span class="keyword math-ltr">sec θ = √(a² + b²)/a = c/a = e</span>. إذن الاختلاف المركزي يساوي قاطع زاوية نصف زاوية الخطين التقاربيين. <span class="keyword-green math-ltr">e = sec θ</span> حيث θ هي نصف الزاوية بين التقاربيين.'
   },
   {
     id:25, cat:'general',
     q:'قارن بين القطوع الثلاثة (مكافئ، ناقص، زائد) في: المعادلة، البؤر، الدليل، الاختلاف المركزي.',
-    a:'<b style="color:var(--neon-cyan)">مكافئ:</b> y²=4px، بؤرة (p,0)، دليل x=-p، <span class="keyword">e=1</span><br><b style="color:var(--neon-green)">ناقص:</b> x²/a²+y²/b²=1، بؤرتان (±ae,0)، دليلان x=±a/e، <span class="keyword-green">e&lt;1</span><br><b style="color:var(--neon-pink)">زائد:</b> x²/a²-y²/b²=1، بؤرتان (±ae,0)، دليلان x=±a/e، <span class="keyword-pink">e&gt;1</span><br>ثابت مشترك: طول الوتر البؤري العمودي = <span class="keyword-yellow">2b²/a</span> (للناقص والزائد).'
+    a:'<b style="color:var(--neon-cyan)">مكافئ:</b> <span class="math-ltr">y²=4px</span>، بؤرة <span class="math-ltr">(p,0)</span>، دليل <span class="math-ltr">x=-p</span>، <span class="keyword math-ltr">e=1</span><br><b style="color:var(--neon-green)">ناقص:</b> <span class="math-ltr">x²/a²+y²/b²=1</span>، بؤرتان <span class="math-ltr">(±ae,0)</span>، دليلان <span class="math-ltr">x=±a/e</span>، <span class="keyword-green math-ltr">e&lt;1</span><br><b style="color:var(--neon-pink)">زائد:</b> <span class="math-ltr">x²/a²-y²/b²=1</span>، بؤرتان <span class="math-ltr">(±ae,0)</span>، دليلان <span class="math-ltr">x=±a/e</span>، <span class="keyword-pink math-ltr">e&gt;1</span><br>ثابت مشترك: طول الوتر البؤري العمودي = <span class="keyword-yellow math-ltr">2b²/a</span> (للناقص والزائد).'
   }
 ];
 
@@ -838,37 +840,37 @@ const WHATIF = [
   {
     icon: '🤯',
     q: 'مفارقة الأسماء: لماذا القطع "الناقص" يستخدم إشارة الجمع (+) ولماذا القطع "الزائد" يستخدم إشارة الطرح (-)؟',
-    a: '⚡ <span class="keyword-yellow">التناقض الرياضي الجميل!</span><br>القطع <span class="keyword-green">الناقص</span>: معادلته x²/a² <span class="keyword-green">+</span> y²/b² = 1 (إشارة جمع!) لأنه "ناقص الانفتاح" أي منغلق على نفسه.<br>القطع <span class="keyword-pink">الزائد</span>: معادلته x²/a² <span class="keyword-pink">-</span> y²/b² = 1 (إشارة طرح!) لأنه "يزيد" وينفتح إلى ما لا نهاية.<br><span class="keyword">القاعدة الذهبية:</span> الإشارة الأقل (السالب) → القطع الأكثر انفتاحًا (الزائد)!'
+    a: '⚡ <span class="keyword-yellow">التناقض الرياضي الجميل!</span><br>القطع <span class="keyword-green">الناقص</span>: معادلته <span class="math-ltr">x²/a² <span class="keyword-green">+</span> y²/b² = 1</span> (إشارة جمع!) لأنه "ناقص الانفتاح" أي منغلق على نفسه.<br>القطع <span class="keyword-pink">الزائد</span>: معادلته <span class="math-ltr">x²/a² <span class="keyword-pink">-</span> y²/b² = 1</span> (إشارة طرح!) لأنه "يزيد" وينفتح إلى ما لا نهاية.<br><span class="keyword">القاعدة الذهبية:</span> الإشارة الأقل (السالب) → القطع الأكثر انفتاحًا (الزائد)!'
   },
   {
     icon: '🌀',
     q: 'ماذا يحدث إذا أدرنا المحاور بزاوية 45° في معادلة القطع الزائد xy = k؟',
-    a: '🌀 <span class="keyword">السحر الرياضي!</span> المعادلة xy = k تبدو غريبة، لكن بدوران المحاور 45°:<br>x = (x\'-y\')/√2، y = (x\'+y\')/√2<br>فتصبح: <span class="keyword">(x\')² - (y\')² = 2k</span><br>وهذه <span class="keyword-green">معادلة قطع زائد قائم</span> بمحاور موازية للأصل! أي أن xy = k هو قطع زائد دُوِّرت محاوره 45°، وخطوطه التقاربية هي محورا الإحداثيات نفسهما.'
+    a: '🌀 <span class="keyword">السحر الرياضي!</span> المعادلة <span class="math-ltr">xy = k</span> تبدو غريبة، لكن بدوران المحاور 45°:<br><span class="math-ltr">x = (x\'-y\')/√2</span>، <span class="math-ltr">y = (x\'+y\')/√2</span><br>فتصبح: <span class="keyword math-ltr">(x\')² - (y\')² = 2k</span><br>وهذه <span class="keyword-green">معادلة قطع زائد قائم</span> بمحاور موازية للأصل! أي أن <span class="math-ltr">xy = k</span> هو قطع زائد دُوِّرت محاوره 45°، وخطوطه التقاربية هي محورا الإحداثيات نفسهما.'
   },
   {
     icon: '💫',
     q: 'هل يمكن أن يكون اختلاف مركزي القطع الزائد القائم هو دائمًا √2؟ لماذا؟',
-    a: '✅ <span class="keyword-green">نعم دائمًا!</span> للقطع الزائد القائم: a = b (شرط التعامد). إذن:<br>b² = a²(e² - 1) ← a² = a²(e² - 1) ← e² - 1 = 1 ← <span class="keyword">e² = 2 ← e = √2</span><br>هذا مستقل عن قيمة a تمامًا! فالقطع الزائد القائم <span class="keyword-yellow">دائمًا وأبدًا</span> اختلافه المركزي √2 مهما كانت أبعاده.'
+    a: '✅ <span class="keyword-green">نعم دائمًا!</span> للقطع الزائد القائم: <span class="math-ltr">a = b</span> (شرط التعامد). إذن:<br><span class="math-ltr">b² = a²(e² - 1)</span> ← <span class="math-ltr">a² = a²(e² - 1)</span> ← <span class="math-ltr">e² - 1 = 1</span> ← <span class="keyword math-ltr">e² = 2 ← e = √2</span><br>هذا مستقل عن قيمة a تمامًا! فالقطع الزائد القائم <span class="keyword-yellow">دائمًا وأبدًا</span> اختلافه المركزي <span class="math-ltr">√2</span> مهما كانت أبعاده.'
   },
   {
     icon: '🎯',
     q: 'ماذا يحدث للقطع الناقص إذا جعلنا a = b؟ هل لا يزال ناقصًا؟',
-    a: '🎯 <span class="keyword-cyan">المفاجأة!</span> إذا كان a = b في x²/a² + y²/b² = 1:<br>تصبح x²/a² + y²/a² = 1 أي <span class="keyword">x² + y² = a²</span><br>وهذه <span class="keyword-green">معادلة دائرة!</span> الدائرة هي حالة خاصة من القطع الناقص عندما يتساوى المحوران الأكبر والأصغر. وعندها:<br>• البؤرتان تتحدان في مركز الدائرة<br>• <span class="keyword-yellow">الاختلاف المركزي e = 0</span> (صفر!'
+    a: '🎯 <span class="keyword-cyan">المفاجأة!</span> إذا كان a = b في <span class="math-ltr">x²/a² + y²/b² = 1</span>:<br>تصبح <span class="math-ltr">x²/a² + y²/a² = 1</span> أي <span class="keyword math-ltr">x² + y² = a²</span><br>وهذه <span class="keyword-green">معادلة دائرة!</span> الدائرة هي حالة خاصة من القطع الناقص عندما يتساوى المحوران الأكبر والأصغر. وعندها:<br>• البؤرتان تتحدان في مركز الدائرة<br>• <span class="keyword-yellow">الاختلاف المركزي <span class="math-ltr">e = 0</span></span> (صفر!'
   },
   {
     icon: '⚡',
     q: 'ما الذي يميز نقل المحاور عن دوران المحاور كأداتين لتبسيط المعادلة؟',
-    a: '⚡ <span class="keyword">الفرق الاستراتيجي:</span><br>🔄 <span class="keyword-green">نقل المحاور</span>: نغير موضع الأصل دون تغيير اتجاه المحاور → يحذف <span class="keyword-yellow">حدود الدرجة الأولى</span> (x, y) → يُستخدم عندما تكون المعادلة Ax² + By² + Cx + Dy + E = 0<br>🌀 <span class="keyword-pink">دوران المحاور</span>: ندير المحاور بزاوية θ دون تغيير موضع الأصل → يحذف <span class="keyword">الحد xy</span> → يُستخدم عندما تكون المعادلة Ax² + Bxy + Cy² + ... = 0'
+    a: '⚡ <span class="keyword">الفرق الاستراتيجي:</span><br>🔄 <span class="keyword-green">نقل المحاور</span>: نغير موضع الأصل دون تغيير اتجاه المحاور → يحذف <span class="keyword-yellow">حدود الدرجة الأولى</span> (x, y) → يُستخدم عندما تكون المعادلة <span class="math-ltr">Ax² + By² + Cx + Dy + E = 0</span><br>🌀 <span class="keyword-pink">دوران المحاور</span>: ندير المحاور بزاوية θ دون تغيير موضع الأصل → يحذف <span class="keyword">الحد xy</span> → يُستخدم عندما تكون المعادلة <span class="math-ltr">Ax² + Bxy + Cy² + ... = 0</span>'
   },
   {
     icon: '🔥',
     q: 'إذا كان القطع الزائد وقطعه المرافق يشتركان في نفس الخطوط التقاربية، كيف تميز بينهما بصريًا؟',
-    a: '🔥 <span class="keyword-yellow">الحيلة البصرية!</span><br>القطع الزائد x²/a² - y²/b² = 1: فرعاه <span class="keyword">أفقيان</span> (يمتدان يمينًا ويسارًا)، ويقطع محور x.<br>المرافق y²/b² - x²/a² = 1: فرعاه <span class="keyword-green">رأسيان</span> (يمتدان لأعلى ولأسفل)، ويقطع محور y.<br>التذكر: <span class="keyword-pink">الكمية الموجبة هي الكمية التي تحدد المحور الذي يقطعه القطع!</span>'
+    a: '🔥 <span class="keyword-yellow">الحيلة البصرية!</span><br>القطع الزائد <span class="math-ltr">x²/a² - y²/b² = 1</span>: فرعاه <span class="keyword">أفقيان</span> (يمتدان يمينًا ويسارًا)، ويقطع محور x.<br>المرافق <span class="math-ltr">y²/b² - x²/a² = 1</span>: فرعاه <span class="keyword-green">رأسيان</span> (يمتدان لأعلى ولأسفل)، ويقطع محور y.<br>التذكر: <span class="keyword-pink">الكمية الموجبة هي الكمية التي تحدد المحور الذي يقطعه القطع!</span>'
   },
   {
     icon: '🧲',
     q: 'ماذا لو أن نقطة تتحرك بحيث بُعدها عن نقطة ثابتة يساوي بعدها عن نقطة ثابتة أخرى؟ ما القطع الناتج؟',
-    a: '🧲 <span class="keyword">المنصف العمودي!</span> لو كانت النقطتان الثابتتان هما (a, 0) و (-a, 0)، فالمحل الهندسي هو مجموعة النقاط المتساوية البُعد منهما، وهذا هو <span class="keyword-green">منصف المسافة بينهما</span> أي محور y، وهو مستقيم. هذا يوضح: القطع المخروطي يتطلب <span class="keyword-yellow">نقطة واحدة (بؤرة) ومستقيم (دليل)</span> وليس نقطتين فقط!'
+    a: '🧲 <span class="keyword">المنصف العمودي!</span> لو كانت النقطتان الثابتتان هما <span class="math-ltr">(a, 0)</span> و <span class="math-ltr">(-a, 0)</span>، فالمحل الهندسي هو مجموعة النقاط المتساوية البُعد منهما، وهذا هو <span class="keyword-green">منصف المسافة بينهما</span> أي محور y، وهو مستقيم. هذا يوضح: القطع المخروطي يتطلب <span class="keyword-yellow">نقطة واحدة (بؤرة) ومستقيم (دليل)</span> وليس نقطتين فقط!'
   }
 ];
 
@@ -878,27 +880,27 @@ const WHATIF = [
 const VOICE_QUESTIONS = [
   {
     q: 'عرّف القطع المكافئ تعريفًا هندسيًا كاملًا، ثم اذكر معادلته القياسية وأهم عناصره.',
-    a: 'القطع المكافئ هو المحل الهندسي للنقاط الواقعة في المستوى والتي تبعد عن نقطة ثابتة تُسمى البؤرة بمسافة تساوي بُعدها عن مستقيم ثابت يُسمى الدليل. معادلته القياسية: y² = 4px حيث رأسه الأصل (0,0)، وبؤرته (p,0)، ودليله x = -p، ومحوره محور x، وطول وتره البؤري العمودي 4p. اختلافه المركزي e = 1 دائمًا.'
+    a: 'القطع المكافئ هو المحل الهندسي للنقاط الواقعة في المستوى والتي تبعد عن نقطة ثابتة تُسمى البؤرة بمسافة تساوي بُعدها عن مستقيم ثابت يُسمى الدليل. معادلته القياسية: <span class="math-ltr">y² = 4px</span> حيث رأسه الأصل <span class="math-ltr">(0,0)</span>، وبؤرته <span class="math-ltr">(p,0)</span>، ودليله <span class="math-ltr">x = -p</span>، ومحوره محور x، وطول وتره البؤري العمودي 4p. اختلافه المركزي <span class="math-ltr">e = 1</span> دائمًا.'
   },
   {
     q: 'أثبت أن شرط تماس المستقيم y = mx + c مع القطع المكافئ y² = 4ax هو c = a/m.',
-    a: 'لإيجاد تقاطع المستقيم y = mx + c مع القطع y² = 4ax، نعوض y = mx + c في المعادلة: (mx + c)² = 4ax، أي m²x² + (2mc - 4a)x + c² = 0. لكي يماس المستقيم القطع يجب أن يكون للمعادلة جذران متساويان، أي المميز = صفر: (2mc - 4a)² - 4m²c² = 0. بالحل: 4m²c² - 16amc + 16a² - 4m²c² = 0، أي -16amc + 16a² = 0، فينتج c = a/m.'
+    a: 'لإيجاد تقاطع المستقيم <span class="math-ltr">y = mx + c</span> مع القطع <span class="math-ltr">y² = 4ax</span>، نعوض <span class="math-ltr">y = mx + c</span> في المعادلة: <span class="math-ltr">(mx + c)² = 4ax</span>، أي <span class="math-ltr">m²x² + (2mc - 4a)x + c² = 0</span>. لكي يماس المستقيم القطع يجب أن يكون للمعادلة جذران متساويان، أي المميز = صفر: <span class="math-ltr">(2mc - 4a)² - 4m²c² = 0</span>. بالحل: <span class="math-ltr">4m²c² - 16amc + 16a² - 4m²c² = 0</span>، أي <span class="math-ltr">-16amc + 16a² = 0</span>، فينتج <span class="math-ltr">c = a/m</span>.'
   },
   {
     q: 'اشرح كيف تميز نوع القطع المخروطي من المعادلة العامة من الدرجة الثانية، مع ذكر حالات المميز.',
-    a: 'المعادلة العامة هي: Ax² + Bxy + Cy² + Dx + Ey + F = 0. نحسب المميز B² - 4AC: إذا كان B² - 4AC = 0 فالقطع مكافئ. إذا كان B² - 4AC أصغر من صفر فالقطع ناقص (أو دائرة إذا كان A = C وB = 0). إذا كان B² - 4AC أكبر من صفر فالقطع زائد. حدود الدرجة الثانية تبقى كما هي سواء نقلنا أو أدرنا المحاور.'
+    a: 'المعادلة العامة هي: <span class="math-ltr">Ax² + Bxy + Cy² + Dx + Ey + F = 0</span>. نحسب المميز <span class="math-ltr">B² - 4AC</span>: إذا كان <span class="math-ltr">B² - 4AC = 0</span> فالقطع مكافئ. إذا كان <span class="math-ltr">B² - 4AC &lt; 0</span> فالقطع ناقص (أو دائرة إذا كان <span class="math-ltr">A = C</span> و<span class="math-ltr">B = 0</span>). إذا كان <span class="math-ltr">B² - 4AC &gt; 0</span> فالقطع زائد. حدود الدرجة الثانية تبقى كما هي سواء نقلنا أو أدرنا المحاور.'
   },
   {
     q: 'اشرح العلاقة بين الاختلاف المركزي للقطع الزائد وزاوية خطيه التقاربيين.',
-    a: 'إذا كانت الزاوية بين الخطين التقاربيين للقطع الزائد هي 2θ، فإن ميل أحد التقاربيين هو m = b/a، وبالتالي tan θ = b/a. ثم نحسب sec θ = √(1 + tan²θ) = √(1 + b²/a²) = √(a² + b²)/a. وبما أن c² = a² + b² إذن sec θ = c/a = e. أي أن الاختلاف المركزي للقطع الزائد يساوي قاطع زاوية نصف الزاوية بين خطيه التقاربيين.'
+    a: 'إذا كانت الزاوية بين الخطين التقاربيين للقطع الزائد هي 2θ، فإن ميل أحد التقاربيين هو <span class="math-ltr">m = b/a</span>، وبالتالي <span class="math-ltr">tan θ = b/a</span>. ثم نحسب <span class="math-ltr">sec θ = √(1 + tan²θ) = √(1 + b²/a²) = √(a² + b²)/a</span>. وبما أن <span class="math-ltr">c² = a² + b²</span> إذن <span class="math-ltr">sec θ = c/a = e</span>. أي أن الاختلاف المركزي للقطع الزائد يساوي قاطع زاوية نصف الزاوية بين خطيه التقاربيين.'
   },
   {
     q: 'اشرح خطوات نقل المحاور في المستوى وكيف تُطبَّق على اختزال المعادلة العامة من الدرجة الثانية.',
-    a: 'نقل المحاور هو إزاحة أصل الإحداثيات من النقطة O(0,0) إلى النقطة O\'(α,β) مع الإبقاء على اتجاه المحاور. علاقات التحويل: x = x\' + α وy = y\' + β. للحصول على الإحداثيات الجديدة: x\' = x - α وy\' = y - β. تطبيق على المعادلة العامة ax² + 2mxy + by² + 2nx + 2Ly + C = 0: نختار (x₀, y₀) بحيث تحقق المعادلتين ax₀ + my₀ + n = 0 وmx₀ + by₀ + L = 0. هذا يحذف حدود الدرجة الأولى من المعادلة الجديدة، وحدود الدرجة الثانية تبقى بدون تغيير.'
+    a: 'نقل المحاور هو إزاحة أصل الإحداثيات من النقطة <span class="math-ltr">O(0,0)</span> إلى النقطة <span class="math-ltr">O\'(α,β)</span> مع الإبقاء على اتجاه المحاور. علاقات التحويل: <span class="math-ltr">x = x\' + α</span> و<span class="math-ltr">y = y\' + β</span>. للحصول على الإحداثيات الجديدة: <span class="math-ltr">x\' = x - α</span> و<span class="math-ltr">y\' = y - β</span>. تطبيق على المعادلة العامة <span class="math-ltr">ax² + 2mxy + by² + 2nx + 2Ly + C = 0</span>: نختار <span class="math-ltr">(x₀, y₀)</span> بحيث تحقق المعادلتين <span class="math-ltr">ax₀ + my₀ + n = 0</span> و<span class="math-ltr">mx₀ + by₀ + L = 0</span>. هذا يحذف حدود الدرجة الأولى من المعادلة الجديدة، وحدود الدرجة الثانية تبقى بدون تغيير.'
   },
   {
     q: 'أثبت أن طول الوتر البؤري العمودي للقطع الناقص x²/a² + y²/b² = 1 يساوي 2b²/a.',
-    a: 'الوتر البؤري العمودي هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. إحداثيات البؤرة هي (ae, 0). عند x = ae نعوض في معادلة القطع: (ae)²/a² + y²/b² = 1، أي e² + y²/b² = 1، فينتج y²/b² = 1 - e² = b²/a² (لأن b² = a²(1 - e²))، إذن y² = b⁴/a²، فينتج y = ±b²/a. إذن طرفا الوتر هما (ae, b²/a) و(ae, -b²/a)، وطوله = 2b²/a.'
+    a: 'الوتر البؤري العمودي هو الوتر المار بالبؤرة وعمودي على المحور الأكبر. إحداثيات البؤرة هي <span class="math-ltr">(ae, 0)</span>. عند <span class="math-ltr">x = ae</span> نعوض في معادلة القطع: <span class="math-ltr">(ae)²/a² + y²/b² = 1</span>، أي <span class="math-ltr">e² + y²/b² = 1</span>، فينتج <span class="math-ltr">y²/b² = 1 - e² = b²/a²</span> (لأن <span class="math-ltr">b² = a²(1 - e²)</span>)، إذن <span class="math-ltr">y² = b⁴/a²</span>، فينتج <span class="math-ltr">y = ±b²/a</span>. إذن طرفا الوتر هما <span class="math-ltr">(ae, b²/a)</span> و<span class="math-ltr">(ae, -b²/a)</span>، وطوله = <span class="math-ltr">2b²/a</span>.'
   }
 ];
 
@@ -912,11 +914,11 @@ const ACCORDION_DATA = [
       <table class="formula-table">
         <tr><th>الخاصية</th><th>مكافئ</th><th>ناقص</th><th>زائد</th></tr>
         <tr><td>المعادلة</td><td class="formula" style="font-size:0.7rem">y²=4px</td><td class="formula" style="font-size:0.7rem">x²/a²+y²/b²=1</td><td class="formula" style="font-size:0.7rem">x²/a²−y²/b²=1</td></tr>
-        <tr><td>البؤرة</td><td>(p,0)</td><td>(±ae,0)</td><td>(±ae,0)</td></tr>
-        <tr><td>الدليل</td><td>x = −p</td><td>x = ±a/e</td><td>x = ±a/e</td></tr>
-        <tr><td>الرأس</td><td>(0,0)</td><td>(±a,0)</td><td>(±a,0)</td></tr>
-        <tr><td>e</td><td style="color:#00f5ff;font-weight:700">e = 1</td><td style="color:#39ff14;font-weight:700">e &lt; 1</td><td style="color:#ff0090;font-weight:700">e &gt; 1</td></tr>
-        <tr><td>الوتر العمودي</td><td>4p</td><td>2b²/a</td><td>2b²/a</td></tr>
+        <tr><td>البؤرة</td><td class="math-ltr">(p,0)</td><td class="math-ltr">(±ae,0)</td><td class="math-ltr">(±ae,0)</td></tr>
+        <tr><td>الدليل</td><td class="math-ltr">x = −p</td><td class="math-ltr">x = ±a/e</td><td class="math-ltr">x = ±a/e</td></tr>
+        <tr><td>الرأس</td><td class="math-ltr">(0,0)</td><td class="math-ltr">(±a,0)</td><td class="math-ltr">(±a,0)</td></tr>
+        <tr><td>e</td><td style="color:#00f5ff;font-weight:700" class="math-ltr">e = 1</td><td style="color:#39ff14;font-weight:700" class="math-ltr">e &lt; 1</td><td style="color:#ff0090;font-weight:700" class="math-ltr">e &gt; 1</td></tr>
+        <tr><td>الوتر العمودي</td><td class="math-ltr">4p</td><td class="math-ltr">2b²/a</td><td class="math-ltr">2b²/a</td></tr>
       </table>
     `
   },
@@ -949,19 +951,19 @@ const ACCORDION_DATA = [
     content: `
       <div style="display:flex;flex-direction:column;gap:0.8rem;">
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
-          <div style="font-size:0.72rem;color:var(--neon-cyan);margin-bottom:0.3rem;">القطع المكافئ y²=4ax</div>
-          <div style="font-size:0.78rem;">شرط تماس y = mx+c : <span class="keyword" style="font-size:0.85rem">c = a/m</span></div>
-          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">نقطة التماس: (a/m², 2a/m)</div>
+          <div style="font-size:0.72rem;color:var(--neon-cyan);margin-bottom:0.3rem;">القطع المكافئ <span class="math-ltr">y²=4ax</span></div>
+          <div style="font-size:0.78rem;">شرط تماس <span class="math-ltr">y = mx+c</span> : <span class="keyword math-ltr" style="font-size:0.85rem">c = a/m</span></div>
+          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">نقطة التماس: <span class="math-ltr">(a/m², 2a/m)</span></div>
         </div>
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
-          <div style="font-size:0.72rem;color:var(--neon-green);margin-bottom:0.3rem;">القطع الناقص x²/a²+y²/b²=1</div>
-          <div style="font-size:0.78rem;">شرط تماس y = mx+c : <span class="keyword-green" style="font-size:0.85rem">c² = a²m² + b²</span></div>
-          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">معادلة المماس: y = mx ± √(a²m²+b²)</div>
+          <div style="font-size:0.72rem;color:var(--neon-green);margin-bottom:0.3rem;">القطع الناقص <span class="math-ltr">x²/a²+y²/b²=1</span></div>
+          <div style="font-size:0.78rem;">شرط تماس <span class="math-ltr">y = mx+c</span> : <span class="keyword-green math-ltr" style="font-size:0.85rem">c² = a²m² + b²</span></div>
+          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">معادلة المماس: <span class="math-ltr">y = mx ± √(a²m²+b²)</span></div>
         </div>
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
-          <div style="font-size:0.72rem;color:var(--neon-pink);margin-bottom:0.3rem;">القطع الزائد x²/a²−y²/b²=1</div>
-          <div style="font-size:0.78rem;">شرط تماس y = mx+c : <span class="keyword-pink" style="font-size:0.85rem">c² = a²m² − b²</span></div>
-          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">معادلة المماس: y = mx ± √(a²m²−b²)</div>
+          <div style="font-size:0.72rem;color:var(--neon-pink);margin-bottom:0.3rem;">القطع الزائد <span class="math-ltr">x²/a²−y²/b²=1</span></div>
+          <div style="font-size:0.78rem;">شرط تماس <span class="math-ltr">y = mx+c</span> : <span class="keyword-pink math-ltr" style="font-size:0.85rem">c² = a²m² − b²</span></div>
+          <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">معادلة المماس: <span class="math-ltr">y = mx ± √(a²m²−b²)</span></div>
         </div>
       </div>
     `
@@ -1000,19 +1002,19 @@ const ACCORDION_DATA = [
     content: `
       <div style="display:flex;flex-direction:column;gap:0.8rem;">
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
-          <div style="font-size:0.72rem;color:var(--neon-cyan);font-weight:700;margin-bottom:0.4rem;">مكافئ y²=4ax عند (x₁,y₁)</div>
-          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword">yy₁ = 2a(x+x₁)</span></div>
-          <div style="font-size:0.78rem;">عمودي: (y−y₁) = (−y₁/2a)(x−x₁)</div>
+          <div style="font-size:0.72rem;color:var(--neon-cyan);font-weight:700;margin-bottom:0.4rem;">مكافئ <span class="math-ltr">y²=4ax</span> عند <span class="math-ltr">(x₁,y₁)</span></div>
+          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword math-ltr">yy₁ = 2a(x+x₁)</span></div>
+          <div style="font-size:0.78rem;">عمودي: <span class="math-ltr">(y−y₁) = (−y₁/2a)(x−x₁)</span></div>
         </div>
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
-          <div style="font-size:0.72rem;color:var(--neon-green);font-weight:700;margin-bottom:0.4rem;">ناقص x²/a²+y²/b²=1 عند (x₁,y₁)</div>
-          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-green">xx₁/a² + yy₁/b² = 1</span></div>
-          <div style="font-size:0.78rem;">عمودي: (x−x₁)/(x₁/a²) = (y−y₁)/(y₁/b²)</div>
+          <div style="font-size:0.72rem;color:var(--neon-green);font-weight:700;margin-bottom:0.4rem;">ناقص <span class="math-ltr">x²/a²+y²/b²=1</span> عند <span class="math-ltr">(x₁,y₁)</span></div>
+          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-green math-ltr">xx₁/a² + yy₁/b² = 1</span></div>
+          <div style="font-size:0.78rem;">عمودي: <span class="math-ltr">(x−x₁)/(x₁/a²) = (y−y₁)/(y₁/b²)</span></div>
         </div>
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
-          <div style="font-size:0.72rem;color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">زائد x²/a²−y²/b²=1 عند (x₁,y₁)</div>
-          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-pink">xx₁/a² − yy₁/b² = 1</span></div>
-          <div style="font-size:0.78rem;">عمودي: (x−x₁)/(x₁/a²) = −(y−y₁)/(y₁/b²)</div>
+          <div style="font-size:0.72rem;color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">زائد <span class="math-ltr">x²/a²−y²/b²=1</span> عند <span class="math-ltr">(x₁,y₁)</span></div>
+          <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-pink math-ltr">xx₁/a² − yy₁/b² = 1</span></div>
+          <div style="font-size:0.78rem;">عمودي: <span class="math-ltr">(x−x₁)/(x₁/a²) = −(y−y₁)/(y₁/b²)</span></div>
         </div>
       </div>
     `
@@ -1022,10 +1024,10 @@ const ACCORDION_DATA = [
     content: `
       <table class="formula-table">
         <tr><th>القطع</th><th>x =</th><th>y =</th></tr>
-        <tr><td style="color:var(--neon-cyan)">مكافئ</td><td>at²</td><td>2at</td></tr>
-        <tr><td style="color:var(--neon-green)">ناقص</td><td>a cos(t)</td><td>b sin(t)</td></tr>
-        <tr><td style="color:var(--neon-pink)">زائد (مثلثي)</td><td>a sec(θ)</td><td>b tan(θ)</td></tr>
-        <tr><td style="color:var(--neon-purple)">زائد (زائدي)</td><td>a cosh(t)</td><td>b sinh(t)</td></tr>
+        <tr><td style="color:var(--neon-cyan)">مكافئ</td><td class="math-ltr">at²</td><td class="math-ltr">2at</td></tr>
+        <tr><td style="color:var(--neon-green)">ناقص</td><td class="math-ltr">a cos(t)</td><td class="math-ltr">b sin(t)</td></tr>
+        <tr><td style="color:var(--neon-pink)">زائد (مثلثي)</td><td class="math-ltr">a sec(θ)</td><td class="math-ltr">b tan(θ)</td></tr>
+        <tr><td style="color:var(--neon-purple)">زائد (زائدي)</td><td class="math-ltr">a cosh(t)</td><td class="math-ltr">b sinh(t)</td></tr>
       </table>
     `
   },
@@ -1034,12 +1036,12 @@ const ACCORDION_DATA = [
     content: `
       <div style="display:flex;flex-direction:column;gap:0.6rem;font-size:0.82rem;">
         <div style="background:rgba(255,0,144,0.05);border:1px solid rgba(255,0,144,0.2);border-radius:0.5rem;padding:0.7rem;">
-          <div style="color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">قطع x²/a²−y²/b²=1 (محوره X)</div>
+          <div style="color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">قطع <span class="math-ltr">x²/a²−y²/b²=1</span> (محوره X)</div>
           <div class="formula">y = ±(b/a)x</div>
-          <div style="margin-top:0.4rem;color:#94a3b8;font-size:0.72rem;">المعادلة المشتركة: x²/a²−y²/b²=0</div>
+          <div style="margin-top:0.4rem;color:#94a3b8;font-size:0.72rem;">المعادلة المشتركة: <span class="math-ltr">x²/a²−y²/b²=0</span></div>
         </div>
         <div style="background:rgba(191,0,255,0.05);border:1px solid rgba(191,0,255,0.2);border-radius:0.5rem;padding:0.7rem;">
-          <div style="color:var(--neon-purple);font-weight:700;margin-bottom:0.4rem;">قطع y²/a²−x²/b²=1 (محوره Y)</div>
+          <div style="color:var(--neon-purple);font-weight:700;margin-bottom:0.4rem;">قطع <span class="math-ltr">y²/a²−x²/b²=1</span> (محوره Y)</div>
           <div class="formula">y = ±(a/b)x</div>
         </div>
         <div style="background:rgba(255,230,0,0.05);border:1px solid rgba(255,230,0,0.2);border-radius:0.5rem;padding:0.7rem;">

@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0f0f1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -43,6 +43,20 @@ tailwind.config = {
     --neon-orange: #ff6b00;
     --neon-pink: #ff0090;
   }
+  
+  /* ===== حلول اللمس للموبايل (Mobile Touch Fixes) ===== */
+  button, a, select, .nav-item, .record-btn, .accordion-header, [onclick] {
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  #fl-intro[style*="display: none"], #fl-intro[style*="opacity: 0"] {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    display: none !important;
+  }
+
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
@@ -215,7 +229,7 @@ tailwind.config = {
     background: rgba(15,15,26,0.97);
     border-top: 1px solid #2a2a4a;
     display: flex;
-    z-index: 100;
+    z-index: 9999;
     backdrop-filter: blur(12px);
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -245,7 +259,7 @@ tailwind.config = {
     background: rgba(15,15,26,0.97);
     border-bottom: 1px solid #2a2a4a;
     padding: 0.7rem 1rem;
-    z-index: 99;
+    z-index: 9998;
     backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
@@ -257,6 +271,8 @@ tailwind.config = {
     padding-top: 70px;
     padding-bottom: 90px;
     min-height: 100vh;
+    position: relative;
+    z-index: 10;
   }
 
   /* ===== PROGRESS BAR ===== */
@@ -284,6 +300,8 @@ tailwind.config = {
     cursor: pointer;
     transition: all 0.2s;
     font-family: inherit;
+    position: relative;
+    z-index: 20;
   }
   .btn-neon:hover, .btn-neon:active {
     background: rgba(0,245,255,0.1);
@@ -382,7 +400,6 @@ tailwind.config = {
     pointer-events: none;
     z-index: 0;
   }
-  #main-content { position: relative; z-index: 1; }
 
   /* Voice waveform */
   .waveform { display: flex; align-items: center; gap: 3px; height: 30px; justify-content: center; }
@@ -429,8 +446,8 @@ tailwind.config = {
 </div>
 
 <!-- FAB Widget -->
-<div id="fl-fab-root">
-  <div id="fl-fab-menu" role="menu" aria-hidden="true">
+<div id="fl-fab-root" style="pointer-events: none; z-index: 9997;">
+  <div id="fl-fab-menu" role="menu" aria-hidden="true" style="pointer-events: auto;">
     <div class="fl-panel-head">
       <span class="fl-panel-emoji">🎴</span>
       <span class="fl-panel-name">Flasha Connect</span>
@@ -450,7 +467,7 @@ tailwind.config = {
       <li><a href="https://t.me/Flasha_0" target="_blank" class="fl-link fl-link--tg"><span>✈️</span> Telegram</a></li>
     </ul>
   </div>
-  <button id="fl-fab-btn">🎴</button>
+  <button id="fl-fab-btn" style="pointer-events: auto;">🎴</button>
 </div>
 
 <!-- Background Grid -->
@@ -657,13 +674,27 @@ tailwind.config = {
   </button>
 </nav>
 
-<footer id="fl-footer">
-  <p>Crafted by <a href="https://github.com/Flasha-0" target="_blank">Flasha 🎴</a></p>
+<footer id="fl-footer" style="padding-bottom: 80px; text-align: center; color: #64748b; font-size: 0.8rem;">
+  <p>Crafted by <a href="https://github.com/Flasha-0" target="_blank" style="color: var(--neon-cyan);">Flasha 🎴</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-scripts.js"></script>
 
 <script>
+// ============================================================
+// حل مشكلة بقاء الـ Loader كطبقة مانعة للمس
+// ============================================================
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const intro = document.getElementById('fl-intro');
+    if (intro) {
+      intro.style.pointerEvents = 'none';
+      intro.style.display = 'none';
+      intro.remove(); // تدمير الطبقة بالكامل لضمان اللمس
+    }
+  }, 2000); // إعطاء فرصة لسكربت الديزاين سيستم يشتغل، وبعدها مسحه إجبارياً
+});
+
 // ============================================================
 // DATA: 25 FLASHCARDS
 // ============================================================
@@ -971,7 +1002,7 @@ const ACCORDION_DATA = [
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
           <div style="font-size:0.72rem;color:var(--neon-cyan);font-weight:700;margin-bottom:0.4rem;">مكافئ y²=4ax عند (x₁,y₁)</div>
           <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword">yy₁ = 2a(x+x₁)</span></div>
-          <div style="font-size:0.78rem;">عمودي: (x−x₁)/(x₁/a²) = (y−y₁)/(y₁/b²)</div>
+          <div style="font-size:0.78rem;">عمودي: (y−y₁) = (−y₁/2a)(x−x₁)</div>
         </div>
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
           <div style="font-size:0.72rem;color:var(--neon-green);font-weight:700;margin-bottom:0.4rem;">ناقص x²/a²+y²/b²=1 عند (x₁,y₁)</div>
@@ -981,6 +1012,7 @@ const ACCORDION_DATA = [
         <div style="padding:0.6rem;background:rgba(0,0,0,0.3);border-radius:0.5rem;">
           <div style="font-size:0.72rem;color:var(--neon-pink);font-weight:700;margin-bottom:0.4rem;">زائد x²/a²−y²/b²=1 عند (x₁,y₁)</div>
           <div style="font-size:0.78rem;margin-bottom:0.2rem;">مماس: <span class="keyword-pink">xx₁/a² − yy₁/b² = 1</span></div>
+          <div style="font-size:0.78rem;">عمودي: (x−x₁)/(x₁/a²) = −(y−y₁)/(y₁/b²)</div>
         </div>
       </div>
     `
@@ -1102,7 +1134,7 @@ function filterCards(cat) {
 
 // Tap to flip
 document.getElementById('flashcard-wrap').addEventListener('click', function(e) {
-  if (!e.target.closest('button')) flipCard();
+  if (!e.target.closest('button') && !e.target.closest('.btn-neon')) flipCard();
 });
 
 // ============================================================
@@ -1275,37 +1307,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initAccordion();
 });
 </script>
-
-<!-- ============================================================
-     manifest.json (inline as comment for reference)
-     Create manifest.json file:
-{
-  "name": "Flasha App - القطاعات المخروطية",
-  "short_name": "Flasha",
-  "description": "مرجع الشفوي النهائي للقطاعات المخروطية",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0f0f1a",
-  "theme_color": "#00f5ff",
-  "orientation": "portrait",
-  "icons": [
-    {"src": "icon-192.png","sizes": "192x192","type": "image/png"},
-    {"src": "icon-512.png","sizes": "512x512","type": "image/png"}
-  ]
-}
-
-     sw.js (Cache-First Service Worker):
-const CACHE_NAME = 'flasha-conic-v1';
-const URLS = [
-  '/',
-  '/index.html',
-  'https://cdn.tailwindcss.com',
-  'https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-styles.css',
-  'https://cdn.jsdelivr.net/gh/Flasha-0/flasha-design-system@main/flasha-scripts.js'
-];
-self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(URLS))));
-self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).then(res => { const clone = res.clone(); caches.open(CACHE_NAME).then(c=>c.put(e.request,clone)); return res; }))));
-============================================================ -->
 
 </body>
 </html>
